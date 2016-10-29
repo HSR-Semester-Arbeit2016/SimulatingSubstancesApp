@@ -18,13 +18,13 @@ public class SimulatingViewModel : MonoBehaviour
 	private void UpdateBlurValue ()
 	{
 		float blurValue = PlayerPrefs.GetFloat ("BlurLevel");
+		if (blurValue > 0) {
 		Text blurValueText = GameObject.Find ("BlurLevelText").GetComponent<Text> ();
 		blurValueText.text = blurValue.ToString ();
 		BlurOptimized cameraLeftBlur = GameObject.Find ("StereoCameraLeft").GetComponent<BlurOptimized> ();
 		cameraLeftBlur.blurSize = blurValue;
 		BlurOptimized cameraRightBlur = GameObject.Find ("StereoCameraRight").GetComponent<BlurOptimized> ();
 		cameraRightBlur.blurSize = blurValue;
-		if (blurValue > 0) {
 			this.UpdateToggle ("BlurToggle");
 		}
 	}
@@ -32,13 +32,13 @@ public class SimulatingViewModel : MonoBehaviour
 	private void UpdateTunnelValue ()
 	{
 		float tunnelValue = PlayerPrefs.GetFloat ("TunnelLevel");
+		if (tunnelValue > 0) {
 		Text tunnelValueText = GameObject.Find ("TunnelLevelText").GetComponent<Text> ();
 		tunnelValueText.text = tunnelValue.ToString ();
 		AlcoholTiltShift cameraLeftTunnel = GameObject.Find ("StereoCameraLeft").GetComponent<AlcoholTiltShift> ();
 		cameraLeftTunnel.blurArea = tunnelValue;
 		AlcoholTiltShift cameraRightTunnel = GameObject.Find ("StereoCameraRight").GetComponent<AlcoholTiltShift> ();
 		cameraRightTunnel.blurArea = tunnelValue;
-		if (tunnelValue > 0) {
 			this.UpdateToggle ("TunnelToggle");
 		}
 	}
@@ -58,9 +58,9 @@ public class SimulatingViewModel : MonoBehaviour
 	private void UpdateRedColorDistorsion ()
 	{
 		int redValue = PlayerPrefs.GetInt ("RedColorDistorsion");
+		if (redValue > 0) {
 		ColorCorrectionCurves colorCorrectionCurvesLeft = GameObject.Find ("StereoCameraLeft").GetComponent<ColorCorrectionCurves> ();
 		ColorCorrectionCurves colorCorrectionCurvesRight = GameObject.Find ("StereoCameraRight").GetComponent<ColorCorrectionCurves> ();
-		if (redValue > 0) {
 			this.UpdateToggle ("RedColorToggle");
 			colorCorrectionCurvesLeft.enabled = true;
 			colorCorrectionCurvesRight.enabled = true;
