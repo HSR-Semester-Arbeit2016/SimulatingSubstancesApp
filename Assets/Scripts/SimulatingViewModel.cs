@@ -19,12 +19,12 @@ public class SimulatingViewModel : MonoBehaviour
 	{
 		float blurValue = PlayerPrefs.GetFloat ("BlurLevel");
 		if (blurValue > 0) {
-		Text blurValueText = GameObject.Find ("BlurLevelText").GetComponent<Text> ();
-		blurValueText.text = blurValue.ToString ();
-		BlurOptimized cameraLeftBlur = GameObject.Find ("StereoCameraLeft").GetComponent<BlurOptimized> ();
-		cameraLeftBlur.blurSize = blurValue;
-		BlurOptimized cameraRightBlur = GameObject.Find ("StereoCameraRight").GetComponent<BlurOptimized> ();
-		cameraRightBlur.blurSize = blurValue;
+			Text blurValueText = GameObject.Find ("BlurLevelText").GetComponent<Text> ();
+			blurValueText.text = blurValue.ToString ();
+			BlurOptimized cameraLeftBlur = GameObject.Find ("StereoCameraLeft").GetComponent<BlurOptimized> ();
+			cameraLeftBlur.blurSize = blurValue;
+			BlurOptimized cameraRightBlur = GameObject.Find ("StereoCameraRight").GetComponent<BlurOptimized> ();
+			cameraRightBlur.blurSize = blurValue;
 			this.UpdateToggle ("BlurToggle");
 		}
 	}
@@ -33,12 +33,12 @@ public class SimulatingViewModel : MonoBehaviour
 	{
 		float tunnelValue = PlayerPrefs.GetFloat ("TunnelLevel");
 		if (tunnelValue > 0) {
-		Text tunnelValueText = GameObject.Find ("TunnelLevelText").GetComponent<Text> ();
-		tunnelValueText.text = tunnelValue.ToString ();
-		AlcoholTiltShift cameraLeftTunnel = GameObject.Find ("StereoCameraLeft").GetComponent<AlcoholTiltShift> ();
-		cameraLeftTunnel.blurArea = tunnelValue;
-		AlcoholTiltShift cameraRightTunnel = GameObject.Find ("StereoCameraRight").GetComponent<AlcoholTiltShift> ();
-		cameraRightTunnel.blurArea = tunnelValue;
+			Text tunnelValueText = GameObject.Find ("TunnelLevelText").GetComponent<Text> ();
+			tunnelValueText.text = tunnelValue.ToString ();
+			AlcoholTiltShift cameraLeftTunnel = GameObject.Find ("StereoCameraLeft").GetComponent<AlcoholTiltShift> ();
+			cameraLeftTunnel.blurArea = tunnelValue;
+			AlcoholTiltShift cameraRightTunnel = GameObject.Find ("StereoCameraRight").GetComponent<AlcoholTiltShift> ();
+			cameraRightTunnel.blurArea = tunnelValue;
 			this.UpdateToggle ("TunnelToggle");
 		}
 	}
@@ -59,8 +59,8 @@ public class SimulatingViewModel : MonoBehaviour
 	{
 		int redValue = PlayerPrefs.GetInt ("RedColorDistorsion");
 		if (redValue > 0) {
-		ColorCorrectionCurves colorCorrectionCurvesLeft = GameObject.Find ("StereoCameraLeft").GetComponent<ColorCorrectionCurves> ();
-		ColorCorrectionCurves colorCorrectionCurvesRight = GameObject.Find ("StereoCameraRight").GetComponent<ColorCorrectionCurves> ();
+			ColorCorrectionCurves colorCorrectionCurvesLeft = GameObject.Find ("StereoCameraLeft").GetComponent<ColorCorrectionCurves> ();
+			ColorCorrectionCurves colorCorrectionCurvesRight = GameObject.Find ("StereoCameraRight").GetComponent<ColorCorrectionCurves> ();
 			this.UpdateToggle ("RedColorToggle");
 			colorCorrectionCurvesLeft.enabled = true;
 			colorCorrectionCurvesRight.enabled = true;
