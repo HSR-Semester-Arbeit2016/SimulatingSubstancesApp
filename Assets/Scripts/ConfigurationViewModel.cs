@@ -18,6 +18,7 @@ public class ConfigurationViewModel : MonoBehaviour
 		this.SetBlurSize (PlayerPrefs.GetFloat ("BlurLevel"));
 		this.SetTunnelValue (PlayerPrefs.GetFloat ("TunnelLevel"));
 		this.UpdateSliders ();
+		this.UpdateDropdowns ();
 	}
 
 	public void SetTunnelValue (float newTunnelValue)
@@ -35,11 +36,23 @@ public class ConfigurationViewModel : MonoBehaviour
 		this.SetDrunkLevelText (newBlurValue * 3, "SelectedBlurAlcoholLevelText");
 	}
 
-	public void ResetConfigurationScene ()
+
+	public void SetDelay (int delay)
+	{
+		PlayerPrefs.SetInt ("DelayLevel", delay);
+	}
+
+	public void SetRedColorDistorsion (int redColorDistorsion)
+	{
+		PlayerPrefs.SetInt ("RedColorDistorsion", redColorDistorsion);
+	}
+
+	public void Reset ()
 	{
 		this.ResetPlayerPrefs ();
 		this.ResetSliders ();
 		this.ResetTextFields ();
+		this.ResetDropdowns ();
 	}
 
 	private void SetEffectValueText (float value, String textFieldName)
@@ -62,16 +75,22 @@ public class ConfigurationViewModel : MonoBehaviour
 
 	}
 
-	private void UpdateSliders() {
+	private void UpdateSliders ()
+	{
 		Slider blurSlider = GameObject.Find ("BlurSlider").GetComponent<Slider> ();
 		blurSlider.value = PlayerPrefs.GetFloat ("BlurLevel");
 		Slider tunnelSlider = GameObject.Find ("TunnelSlider").GetComponent<Slider> ();
 		tunnelSlider.value = PlayerPrefs.GetFloat ("TunnelLevel");
-		Slider delaySlider = GameObject.Find ("DelaySlider").GetComponent<Slider> ();
-		delaySlider.value = PlayerPrefs.GetFloat ("DelayLevel");
-
 	}
 
+	private void UpdateDropdowns ()
+	{
+		Dropdown delayDropdown = GameObject.Find ("DelayDropdown").GetComponent<Dropdown> ();
+		delayDropdown.value = PlayerPrefs.GetInt ("DelayLevel");
+		Dropdown colorDropdown = GameObject.Find ("ColorDropdown").GetComponent<Dropdown> ();
+		colorDropdown.value = PlayerPrefs.GetInt ("RedColorDistorsion");
+
+	}
 
 	private void ResetSliders ()
 	{
@@ -93,6 +112,15 @@ public class ConfigurationViewModel : MonoBehaviour
 	{
 		PlayerPrefs.SetFloat ("BlurLevel", 0);
 		PlayerPrefs.SetFloat ("TunnelLevel", 0);
-		PlayerPrefs.SetFloat ("DelayLevel", 0);
+		PlayerPrefs.SetInt ("DelayLevel", 0);
+		PlayerPrefs.SetInt ("RedColorDistorsion", 0);
+	}
+
+	private void ResetDropdowns ()
+	{
+		Dropdown[] configurationSceneDropdowns = GameObject.FindObjectsOfType<Dropdown> ();
+		foreach (Dropdown dropdown in configurationSceneDropdowns) {
+			dropdown.value = 0;
+		}
 	}
 }

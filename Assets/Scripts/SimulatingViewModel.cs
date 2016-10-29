@@ -11,6 +11,8 @@ public class SimulatingViewModel : MonoBehaviour
 	{
 		this.UpdateBlurValue ();
 		this.UpdateTunnelValue ();
+		this.UpdateDelay ();
+		this.UpdateRedColorDistorsion ();
 	}
 
 	private void UpdateBlurValue ()
@@ -41,6 +43,27 @@ public class SimulatingViewModel : MonoBehaviour
 		}
 	}
 
+	private void UpdateDelay ()
+	{
+		float delayValue = PlayerPrefs.GetInt ("DelayLevel");
+		if (delayValue > 0) {
+			this.UpdateToggle ("DelayToggle");
+		}
+	}
+
+	private void UpdateRedColorDistorsion ()
+	{
+		int redValue = PlayerPrefs.GetInt ("RedColorDistorsion");
+		ColorCorrectionCurves colorCorrectionCurvesLeft = GameObject.Find ("StereoCameraLeft").GetComponent<ColorCorrectionCurves> ();
+		ColorCorrectionCurves colorCorrectionCurvesRight = GameObject.Find ("StereoCameraRight").GetComponent<ColorCorrectionCurves> ();
+		if (redValue > 0) {
+			this.UpdateToggle ("RedColorToggle");
+			colorCorrectionCurvesLeft.enabled = true;
+			colorCorrectionCurvesRight.enabled = true;
+		}
+
+
+	}
 
 	private void UpdateToggle (String toggleName)
 	{
