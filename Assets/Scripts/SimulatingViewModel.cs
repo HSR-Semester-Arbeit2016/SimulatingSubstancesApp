@@ -65,8 +65,6 @@ public class SimulatingViewModel : MonoBehaviour
 			colorCorrectionCurvesLeft.enabled = true;
 			colorCorrectionCurvesRight.enabled = true;
 		}
-
-
 	}
 
 	private void UpdateToggle (String toggleName)
