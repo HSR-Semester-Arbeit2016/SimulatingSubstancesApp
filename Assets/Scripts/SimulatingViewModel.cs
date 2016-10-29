@@ -47,6 +47,10 @@ public class SimulatingViewModel : MonoBehaviour
 	{
 		float delayValue = PlayerPrefs.GetInt ("DelayLevel");
 		if (delayValue > 0) {
+			Delay delayLeft = GameObject.Find ("StereoCameraLeft").GetComponent<Delay> ();
+			Delay delayRight = GameObject.Find ("StereoCameraRight").GetComponent<Delay> ();
+			delayRight.IsEnabled = true;
+			delayLeft.IsEnabled = true;
 			this.UpdateToggle ("DelayToggle");
 		}
 	}

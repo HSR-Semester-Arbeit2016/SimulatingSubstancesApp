@@ -3,33 +3,45 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
-public class Delay : MonoBehaviour {
-	private Queue myQ;
+public class Delay : MonoBehaviour
+{
+	private Queue<RenderTexture> renderTextureQueue;
+	private bool isEnabled = false;
 
-	private int delayQueueCount = 80;
-	public int DelayQueueCount {
-		get { return delayQueueCount; }
-		set {delayQueueCount = value;} 
+	public bool IsEnabled {
+		get { return isEnabled; }
+		set { isEnabled = value; }
 	}
 
-	public Delay() {
-		this.myQ = new Queue();
-	}	
+	private int delayQueueCount = 15;
 
-	void OnRenderImage(RenderTexture src, RenderTexture dest) {
+	private int DelayQueueCount {
+		get { return delayQueueCount; }
+	}
+
+	public Delay ()
+	{
+		this.renderTextureQueue = new Queue<RenderTexture> ();
+	}
+
+	void OnRenderImage (RenderTexture src, RenderTexture dest)
+	{
+		if (isEnabled) {
+			this.setDelay (src, dest);
+		} else {
+			Graphics.Blit (src, dest);
+		}
+	}
+
+	private void setDelay (RenderTexture src, RenderTexture dest)
+	{
 		RenderTexture temporary = RenderTexture.GetTemporary (src.width, src.height);
-		if (src.IsCreated()) {
-			Debug.Log ("Source");
-		}
 		if (temporary.IsCreated ()) {
-			Debug.Log ("Delay");
-			myQ.Enqueue (temporary);
-		} else {				// we could remove this else, but I can observe a bit delay or interruption in the video when removed
-			myQ.Enqueue (src);
-		}
-		if (myQ.Count == DelayQueueCount) {
-			src = (RenderTexture)myQ.Dequeue ();
-			Graphics.Blit(src,dest);
+			renderTextureQueue.Enqueue (temporary);
+		} 
+		if (renderTextureQueue.Count == DelayQueueCount) {
+			src = (RenderTexture)renderTextureQueue.Dequeue ();
+			Graphics.Blit (src, dest);
 		} 
 	}
 }
