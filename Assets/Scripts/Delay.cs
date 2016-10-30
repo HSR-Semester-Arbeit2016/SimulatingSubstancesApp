@@ -38,7 +38,9 @@ public class Delay : MonoBehaviour
 		RenderTexture temporary = RenderTexture.GetTemporary (src.width, src.height);
 		if (temporary.IsCreated ()) {
 			renderTextureQueue.Enqueue (temporary);
-		} 
+		} else {			
+			renderTextureQueue.Enqueue (src);
+		}
 		if (renderTextureQueue.Count == DelayQueueCount) {
 			src = (RenderTexture)renderTextureQueue.Dequeue ();
 			Graphics.Blit (src, dest);
