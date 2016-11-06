@@ -7,17 +7,19 @@ using UnityStandardAssets.ImageEffects;
 public class SimulatingViewModel : MonoBehaviour
 {
 
+	private float timeLeft = 180.0f;
+
 	void Start ()
 	{
-		this.UpdateBlurValue ();
-		this.UpdateTunnelValue ();
-		this.UpdateDelay ();
-		this.UpdateRedColorDistorsion ();
+		this.UpdateBlurValue (PlayerPrefs.GetFloat ("BlurLevel"));
+		this.UpdateTunnelValue (PlayerPrefs.GetFloat ("TunnelLevel"));
+		this.UpdateDelay (PlayerPrefs.GetInt ("DelayLevel"));
+		this.UpdateRedColorDistorsion (PlayerPrefs.GetInt ("RedColorDistorsion"));
+		this.UpdateRandomEffects (PlayerPrefs.GetInt ("RandomEffects"));
 	}
 
-	private void UpdateBlurValue ()
+	private void UpdateBlurValue (float blurValue)
 	{
-		float blurValue = PlayerPrefs.GetFloat ("BlurLevel");
 		if (blurValue > 0) {
 			Text blurValueText = GameObject.Find ("BlurLevelText").GetComponent<Text> ();
 			blurValueText.text = blurValue.ToString ();
@@ -29,9 +31,9 @@ public class SimulatingViewModel : MonoBehaviour
 		}
 	}
 
-	private void UpdateTunnelValue ()
+	private void UpdateTunnelValue (float tunnelValue)
 	{
-		float tunnelValue = PlayerPrefs.GetFloat ("TunnelLevel");
+		
 		if (tunnelValue > 0) {
 			Text tunnelValueText = GameObject.Find ("TunnelLevelText").GetComponent<Text> ();
 			tunnelValueText.text = tunnelValue.ToString ();
@@ -43,9 +45,9 @@ public class SimulatingViewModel : MonoBehaviour
 		}
 	}
 
-	private void UpdateDelay ()
+	private void UpdateDelay (float delayValue)
 	{
-		float delayValue = PlayerPrefs.GetInt ("DelayLevel");
+		
 		if (delayValue > 0) {
 			Delay delayLeft = GameObject.Find ("StereoCameraLeft").GetComponent<Delay> ();
 			Delay delayRight = GameObject.Find ("StereoCameraRight").GetComponent<Delay> ();
@@ -55,9 +57,9 @@ public class SimulatingViewModel : MonoBehaviour
 		}
 	}
 
-	private void UpdateRedColorDistorsion ()
+	private void UpdateRedColorDistorsion (int redValue)
 	{
-		int redValue = PlayerPrefs.GetInt ("RedColorDistorsion");
+		
 		if (redValue > 0) {
 			ColorCorrectionCurves colorCorrectionCurvesLeft = GameObject.Find ("StereoCameraLeft").GetComponent<ColorCorrectionCurves> ();
 			ColorCorrectionCurves colorCorrectionCurvesRight = GameObject.Find ("StereoCameraRight").GetComponent<ColorCorrectionCurves> ();
@@ -66,6 +68,37 @@ public class SimulatingViewModel : MonoBehaviour
 			colorCorrectionCurvesRight.enabled = true;
 		}
 	}
+
+	private void UpdateRandomEffects (int randomEffects)
+	{
+		if (randomEffects == 1) {
+			this.UpdateToggle ("RandomToggle");
+			// TODO complete. We need a timer in order to trigger the changes in the different image effects
+			Debug.Log ("UpdateRandomEffects called");
+
+		}
+		if (randomEffects == 0) {
+
+		}
+	}
+
+	private void GenerateRandomBlurEffects ()
+	{
+		if (PlayerPrefs.GetFloat ("BlurLevel") > 0) {
+			int randomBlurLevel = this.GetRandomIntFromRange (0, 4);
+			Debug.Log ("GEnerateRandomBlurEffects called with: " + randomBlurLevel);
+			//TODO complete this
+		} 
+
+
+	}
+
+	private int GetRandomIntFromRange (int from, int to)
+	{
+		System.Random rnd = new System.Random ();
+		return rnd.Next (from, to);
+	}
+
 
 	private void UpdateToggle (String toggleName)
 	{

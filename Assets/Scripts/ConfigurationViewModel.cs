@@ -42,9 +42,24 @@ public class ConfigurationViewModel : MonoBehaviour
 		PlayerPrefs.SetInt ("DelayLevel", delay);
 	}
 
+	/// <summary>
+	/// Sets the red color distorsion.
+	/// </summary>
+	/// <param name="redColorDistorsion">Red color distorsion.</param>
 	public void SetRedColorDistorsion (int redColorDistorsion)
 	{
 		PlayerPrefs.SetInt ("RedColorDistorsion", redColorDistorsion);
+	}
+
+	/// <summary>
+	/// Sets the random effects on or off. 
+	/// </summary>
+	/// <param name="randomEffect">Random effect.</param>
+	public void SetRandomEffects (int randomEffect)
+
+	{
+		Debug.Log ("SetRandomEffect called with: " + randomEffect);
+		PlayerPrefs.SetInt ("RandomEffects", randomEffect);
 	}
 
 	public void Reset ()
@@ -89,7 +104,8 @@ public class ConfigurationViewModel : MonoBehaviour
 		delayDropdown.value = PlayerPrefs.GetInt ("DelayLevel");
 		Dropdown colorDropdown = GameObject.Find ("ColorDropdown").GetComponent<Dropdown> ();
 		colorDropdown.value = PlayerPrefs.GetInt ("RedColorDistorsion");
-
+		Dropdown randomDropdown = GameObject.Find ("RandomDropdown").GetComponent<Dropdown> ();
+		randomDropdown.value = PlayerPrefs.GetInt ("RandomEffects");
 	}
 
 	private void ResetSliders ()
@@ -114,6 +130,7 @@ public class ConfigurationViewModel : MonoBehaviour
 		PlayerPrefs.SetFloat ("TunnelLevel", 0);
 		PlayerPrefs.SetInt ("DelayLevel", 0);
 		PlayerPrefs.SetInt ("RedColorDistorsion", 0);
+		PlayerPrefs.SetInt ("RandomEffects", 0);
 	}
 
 	private void ResetDropdowns ()
