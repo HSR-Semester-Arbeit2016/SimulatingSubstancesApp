@@ -75,6 +75,8 @@ public class SimulatingViewModel : MonoBehaviour
 			this.UpdateToggle ("RandomToggle");
 			// TODO complete. We need a timer in order to trigger the changes in the different image effects
 			Debug.Log ("UpdateRandomEffects called");
+			int randomBlurLevel = this.GetRandomIntFromRange (0, 4);
+			Debug.Log ("GEnerateRandom called with: " + randomBlurLevel);
 
 		}
 		if (randomEffects == 0) {

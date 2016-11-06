@@ -56,9 +56,7 @@ public class ConfigurationViewModel : MonoBehaviour
 	/// </summary>
 	/// <param name="randomEffect">Random effect.</param>
 	public void SetRandomEffects (int randomEffect)
-
 	{
-		Debug.Log ("SetRandomEffect called with: " + randomEffect);
 		PlayerPrefs.SetInt ("RandomEffects", randomEffect);
 	}
 
