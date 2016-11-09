@@ -12,7 +12,8 @@ public class SimulatingViewModel : MonoBehaviour
 		this.UpdateBlurValue ();
 		this.UpdateTunnelValue ();
 		this.UpdateDelay ();
-		this.UpdateRedColorDistorsion ();
+        this.UpdateMotionBlur();
+		this.UpdateRedColorDistortion ();
 	}
 
 	private void UpdateBlurValue ()
@@ -55,16 +56,29 @@ public class SimulatingViewModel : MonoBehaviour
 		}
 	}
 
-	private void UpdateRedColorDistorsion ()
+    private void UpdateMotionBlur()
+    {
+        float motionBlurValue = PlayerPrefs.GetInt("MotionBlur");
+        if (motionBlurValue > 0)
+        {
+            CameraMotionBlur motionBlurLeft = GameObject.Find("StereoCameraLeft").GetComponent<CameraMotionBlur>();
+            CameraMotionBlur motionBlurRight = GameObject.Find("StereoCameraRight").GetComponent<CameraMotionBlur>();
+            motionBlurRight.enabled = true;
+            motionBlurLeft.enabled = true;
+            this.UpdateToggle("MotionBlurToggle");
+        }
+    }
+
+    private void UpdateRedColorDistortion ()
 	{
-		int redValue = PlayerPrefs.GetInt ("RedColorDistorsion");
+		int redValue = PlayerPrefs.GetInt ("RedColorDistortion");
 		if (redValue > 0) {
 			ColorCorrectionCurves colorCorrectionCurvesLeft = GameObject.Find ("StereoCameraLeft").GetComponent<ColorCorrectionCurves> ();
 			ColorCorrectionCurves colorCorrectionCurvesRight = GameObject.Find ("StereoCameraRight").GetComponent<ColorCorrectionCurves> ();
-			this.UpdateToggle ("RedColorToggle");
 			colorCorrectionCurvesLeft.enabled = true;
 			colorCorrectionCurvesRight.enabled = true;
-		}
+            this.UpdateToggle("RedColorToggle");
+        }
 	}
 
 	private void UpdateToggle (String toggleName)

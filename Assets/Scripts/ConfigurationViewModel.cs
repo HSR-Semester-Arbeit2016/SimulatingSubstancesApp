@@ -33,18 +33,23 @@ public class ConfigurationViewModel : MonoBehaviour
 	{	
 		PlayerPrefs.SetFloat ("BlurLevel", newBlurValue);
 		this.SetEffectValueText (newBlurValue, "BlurLevelText");
-		this.SetDrunkLevelText (newBlurValue * 3, "SelectedBlurAlcoholLevelText");
+		this.SetDrunkLevelText (newBlurValue, "SelectedBlurAlcoholLevelText");
 	}
 
 
-	public void SetDelay (int delay)
+	public void SetDelay (int value)
 	{
-		PlayerPrefs.SetInt ("DelayLevel", delay);
+		PlayerPrefs.SetInt ("DelayLevel", value);
 	}
 
-	public void SetRedColorDistorsion (int redColorDistorsion)
+    public void SetMotionBlur(int value)
+    {
+        PlayerPrefs.SetInt("MotionBlur", value);
+    }
+
+	public void SetRedColorDistortion (int value)
 	{
-		PlayerPrefs.SetInt ("RedColorDistorsion", redColorDistorsion);
+		PlayerPrefs.SetInt ("RedColorDistortion", value);
 	}
 
 	public void Reset ()
@@ -61,9 +66,11 @@ public class ConfigurationViewModel : MonoBehaviour
 		blurValueText.text = value.ToString ();
 	}
 
-	private void SetDrunkLevelText (float newValue, String textFiedlName)
+	private void SetDrunkLevelText (float newValue, String textFieldName)
 	{
-		Text selectedAlcoholLevelText = GameObject.Find (textFiedlName).GetComponent<Text> ();
+		Text selectedAlcoholLevelText = GameObject.Find (textFieldName).GetComponent<Text> ();
+        selectedAlcoholLevelText.text = newValue.ToString();
+        /*
 		var myswitch = new Dictionary <Func<float,bool>, Action> { 
 			{ x => x == 0 ,    () => selectedAlcoholLevelText.text = this.soberLevel }, 
 			{ x => x < 4 ,    () => selectedAlcoholLevelText.text = this.soberLevel }, 
@@ -71,26 +78,34 @@ public class ConfigurationViewModel : MonoBehaviour
 			{ x => x < 12,    () => selectedAlcoholLevelText.text = this.drunkLevel },
 			{ x => x < 15 ,   () => selectedAlcoholLevelText.text = this.veryDrunkLevel }  
 		};
-		myswitch.First (sw => sw.Key (newValue)).Value ();
+		myswitch.First (sw => sw.Key (newValue)).Value ();*/
 
 	}
 
 	private void UpdateSliders ()
 	{
-		Slider blurSlider = GameObject.Find ("BlurSlider").GetComponent<Slider> ();
-		blurSlider.value = PlayerPrefs.GetFloat ("BlurLevel");
-		Slider tunnelSlider = GameObject.Find ("TunnelSlider").GetComponent<Slider> ();
-		tunnelSlider.value = PlayerPrefs.GetFloat ("TunnelLevel");
+        UpdateSlider("BlurSlider", "BlurLevel");
+        UpdateSlider("TunnelSlider", "TunnelLevel");
 	}
+
+    private void UpdateSlider(string sliderName, string playerPrefName)
+    {
+        Slider slider = GameObject.Find(sliderName).GetComponent<Slider>();
+        slider.value = PlayerPrefs.GetFloat(playerPrefName);
+    }
 
 	private void UpdateDropdowns ()
 	{
-		Dropdown delayDropdown = GameObject.Find ("DelayDropdown").GetComponent<Dropdown> ();
-		delayDropdown.value = PlayerPrefs.GetInt ("DelayLevel");
-		Dropdown colorDropdown = GameObject.Find ("ColorDropdown").GetComponent<Dropdown> ();
-		colorDropdown.value = PlayerPrefs.GetInt ("RedColorDistorsion");
-
+        UpdateDropdown("DelayDropdown", "DelayLevel");
+        UpdateDropdown("ColorDropdown", "RedColorDistortion");
+        UpdateDropdown("MotionBlurDropdown", "MotionBlur");
 	}
+
+    private void UpdateDropdown(string dropdownName, string playerPrefName)
+    {
+        Dropdown dropdown = GameObject.Find(dropdownName).GetComponent<Dropdown>();
+        dropdown.value = PlayerPrefs.GetInt(playerPrefName);
+    }
 
 	private void ResetSliders ()
 	{
@@ -113,8 +128,9 @@ public class ConfigurationViewModel : MonoBehaviour
 		PlayerPrefs.SetFloat ("BlurLevel", 0);
 		PlayerPrefs.SetFloat ("TunnelLevel", 0);
 		PlayerPrefs.SetInt ("DelayLevel", 0);
-		PlayerPrefs.SetInt ("RedColorDistorsion", 0);
-	}
+		PlayerPrefs.SetInt ("MotionBlur", 0);
+        PlayerPrefs.SetInt("RedColorDistortion", 0);
+    }
 
 	private void ResetDropdowns ()
 	{
