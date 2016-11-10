@@ -47,9 +47,22 @@ public class ConfigurationViewModel : MonoBehaviour
         PlayerPrefs.SetInt("MotionBlur", value);
     }
 
+    /// <summary>
+	/// Sets the red color distortion.
+	/// </summary>
+	/// <param name="redColorDistortion">Red color distortion.</param>
 	public void SetRedColorDistortion (int value)
 	{
 		PlayerPrefs.SetInt ("RedColorDistortion", value);
+	}
+
+	/// <summary>
+	/// Sets the random effects on or off. 
+	/// </summary>
+	/// <param name="randomEffect">Random effect.</param>
+	public void SetRandomEffects (int randomEffect)
+	{
+		PlayerPrefs.SetInt ("RandomEffects", randomEffect);
 	}
 
 	public void Reset ()
@@ -99,6 +112,7 @@ public class ConfigurationViewModel : MonoBehaviour
         UpdateDropdown("DelayDropdown", "DelayLevel");
         UpdateDropdown("ColorDropdown", "RedColorDistortion");
         UpdateDropdown("MotionBlurDropdown", "MotionBlur");
+        UpdateDropdown("RandomDropdown", "RandomEffects");
 	}
 
     private void UpdateDropdown(string dropdownName, string playerPrefName)
@@ -129,8 +143,9 @@ public class ConfigurationViewModel : MonoBehaviour
 		PlayerPrefs.SetFloat ("TunnelLevel", 0);
 		PlayerPrefs.SetInt ("DelayLevel", 0);
 		PlayerPrefs.SetInt ("MotionBlur", 0);
-        PlayerPrefs.SetInt("RedColorDistortion", 0);
-    }
+        PlayerPrefs.SetInt ("RedColorDistortion", 0);    
+		PlayerPrefs.SetInt ("RandomEffects", 0);
+	}
 
 	private void ResetDropdowns ()
 	{

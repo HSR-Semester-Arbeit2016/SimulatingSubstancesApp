@@ -7,72 +7,72 @@ using UnityStandardAssets.ImageEffects;
 public class SimulatingViewModel : MonoBehaviour
 {
 
+	private float timeLeft = 180.0f;
+
 	void Start ()
 	{
-		this.UpdateBlurValue ();
-		this.UpdateTunnelValue ();
-		this.UpdateDelay ();
-        this.UpdateMotionBlur();
-		this.UpdateRedColorDistortion ();
+		this.UpdateBlurValue (PlayerPrefs.GetFloat("BlurLevel"));
+		this.UpdateTunnelValue (PlayerPrefs.GetFloat("TunnelLevel"));
+		this.UpdateDelay (PlayerPrefs.GetInt("DelayLevel"));
+        this.UpdateMotionBlur(PlayerPrefs.GetInt("MotionBlur"));
+		this.UpdateRedColorDistortion (PlayerPrefs.GetInt("RedColorDistorsion"));
+        this.UpdateRandomEffects(PlayerPrefs.GetInt("RandomEffects"));
 	}
 
-	private void UpdateBlurValue ()
+	private void UpdateBlurValue (float value)
 	{
-		float blurValue = PlayerPrefs.GetFloat ("BlurLevel");
-		if (blurValue > 0) {
+		if (value > 0) {
 			Text blurValueText = GameObject.Find ("BlurLevelText").GetComponent<Text> ();
-			blurValueText.text = blurValue.ToString ();
+			blurValueText.text = value.ToString ();
 			BlurOptimized cameraLeftBlur = GameObject.Find ("StereoCameraLeft").GetComponent<BlurOptimized> ();
-			cameraLeftBlur.blurSize = blurValue;
 			BlurOptimized cameraRightBlur = GameObject.Find ("StereoCameraRight").GetComponent<BlurOptimized> ();
-			cameraRightBlur.blurSize = blurValue;
+            cameraLeftBlur.blurSize = value;
+            cameraRightBlur.blurSize = value;
 			this.UpdateToggle ("BlurToggle");
 		}
 	}
 
-	private void UpdateTunnelValue ()
+	private void UpdateTunnelValue (float value)
 	{
-		float tunnelValue = PlayerPrefs.GetFloat ("TunnelLevel");
-		if (tunnelValue > 0) {
+		
+		if (value > 0) {
 			Text tunnelValueText = GameObject.Find ("TunnelLevelText").GetComponent<Text> ();
-			tunnelValueText.text = tunnelValue.ToString ();
-			AlcoholTiltShift cameraLeftTunnel = GameObject.Find ("StereoCameraLeft").GetComponent<AlcoholTiltShift> ();
-			cameraLeftTunnel.blurArea = tunnelValue;
+			tunnelValueText.text = value.ToString ();
+			AlcoholTiltShift cameraLeftTunnel = GameObject.Find ("StereoCameraLeft").GetComponent<AlcoholTiltShift> ();			
 			AlcoholTiltShift cameraRightTunnel = GameObject.Find ("StereoCameraRight").GetComponent<AlcoholTiltShift> ();
-			cameraRightTunnel.blurArea = tunnelValue;
+            cameraLeftTunnel.blurArea = value;
+            cameraRightTunnel.blurArea = value;
 			this.UpdateToggle ("TunnelToggle");
 		}
 	}
 
-	private void UpdateDelay ()
+	private void UpdateDelay (float value)
 	{
-		float delayValue = PlayerPrefs.GetInt ("DelayLevel");
-		if (delayValue > 0) {
+		
+		if (value > 0) {
 			Delay delayLeft = GameObject.Find ("StereoCameraLeft").GetComponent<Delay> ();
 			Delay delayRight = GameObject.Find ("StereoCameraRight").GetComponent<Delay> ();
-			delayRight.IsEnabled = true;
-			delayLeft.IsEnabled = true;
-			this.UpdateToggle ("DelayToggle");
+            delayLeft.IsEnabled = true;
+            delayRight.IsEnabled = true;
+            this.UpdateToggle ("DelayToggle");
 		}
 	}
 
-    private void UpdateMotionBlur()
+    private void UpdateMotionBlur(int value)
     {
-        float motionBlurValue = PlayerPrefs.GetInt("MotionBlur");
-        if (motionBlurValue > 0)
+        if (value > 0)
         {
             CameraMotionBlur motionBlurLeft = GameObject.Find("StereoCameraLeft").GetComponent<CameraMotionBlur>();
             CameraMotionBlur motionBlurRight = GameObject.Find("StereoCameraRight").GetComponent<CameraMotionBlur>();
-            motionBlurRight.enabled = true;
             motionBlurLeft.enabled = true;
+            motionBlurRight.enabled = true;
             this.UpdateToggle("MotionBlurToggle");
         }
     }
 
-    private void UpdateRedColorDistortion ()
+    private void UpdateRedColorDistortion (int value)
 	{
-		int redValue = PlayerPrefs.GetInt ("RedColorDistortion");
-		if (redValue > 0) {
+		if (value > 0) {
 			ColorCorrectionCurves colorCorrectionCurvesLeft = GameObject.Find ("StereoCameraLeft").GetComponent<ColorCorrectionCurves> ();
 			ColorCorrectionCurves colorCorrectionCurvesRight = GameObject.Find ("StereoCameraRight").GetComponent<ColorCorrectionCurves> ();
 			colorCorrectionCurvesLeft.enabled = true;
@@ -80,6 +80,34 @@ public class SimulatingViewModel : MonoBehaviour
             this.UpdateToggle("RedColorToggle");
         }
 	}
+
+	private void UpdateRandomEffects (int value)
+	{
+		if (value == 1) {
+			this.UpdateToggle ("RandomToggle");
+			// TODO complete. We need a timer in order to trigger the changes in the different image effects
+			Debug.Log ("UpdateRandomEffects called");
+			int randomBlurLevel = this.GetRandomIntFromRange (0, 4);
+			Debug.Log ("GEnerateRandom called with: " + randomBlurLevel);
+
+		}
+	}
+
+	private void GenerateRandomBlurEffects ()
+	{
+		if (PlayerPrefs.GetFloat ("BlurLevel") > 0) {
+			int randomBlurLevel = this.GetRandomIntFromRange (0, 4);
+			Debug.Log ("GEnerateRandomBlurEffects called with: " + randomBlurLevel);
+			//TODO complete this
+		} 
+	}
+
+	private int GetRandomIntFromRange (int from, int to)
+	{
+		System.Random rnd = new System.Random ();
+		return rnd.Next (from, to);
+	}
+
 
 	private void UpdateToggle (String toggleName)
 	{
