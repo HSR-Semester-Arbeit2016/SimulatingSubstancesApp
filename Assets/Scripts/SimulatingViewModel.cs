@@ -34,7 +34,6 @@ public class SimulatingViewModel : MonoBehaviour
 
 	private void UpdateTunnelValue (float value)
 	{
-		
 		if (value > 0) {
 			Text tunnelValueText = GameObject.Find ("TunnelLevelText").GetComponent<Text> ();
 			tunnelValueText.text = value.ToString ();

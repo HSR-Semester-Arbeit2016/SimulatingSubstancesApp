@@ -60,9 +60,9 @@ public class ConfigurationViewModel : MonoBehaviour
 	/// Sets the random effects on or off. 
 	/// </summary>
 	/// <param name="randomEffect">Random effect.</param>
-	public void SetRandomEffects (int randomEffect)
+	public void SetRandomEffects (int value)
 	{
-		PlayerPrefs.SetInt ("RandomEffects", randomEffect);
+		PlayerPrefs.SetInt ("RandomEffects", value);
 	}
 
 	public void Reset ()
