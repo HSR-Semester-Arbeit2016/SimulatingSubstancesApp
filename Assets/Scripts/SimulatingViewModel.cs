@@ -15,7 +15,7 @@ public class SimulatingViewModel : MonoBehaviour
 		this.UpdateTunnelValue (PlayerPrefs.GetFloat("TunnelLevel"));
 		this.UpdateDelay (PlayerPrefs.GetInt("DelayLevel"));
         this.UpdateMotionBlur(PlayerPrefs.GetInt("MotionBlur"));
-		this.UpdateRedColorDistortion (PlayerPrefs.GetInt("RedColorDistorsion"));
+		this.UpdateRedColorDistortion (PlayerPrefs.GetInt("RedColorDistortion"));
         this.UpdateRandomEffects(PlayerPrefs.GetInt("RandomEffects"));
 	}
 
