@@ -221,7 +221,7 @@ namespace UnityEngine.UI.Extensions
 				OnSelectionChanged (indx);
 
 			_selectedIndex = indx;
-			//ToggleDropdownPanel(false);
+			ToggleDropdownPanel(false);
 			UpdateSelected ();
 		}
 
