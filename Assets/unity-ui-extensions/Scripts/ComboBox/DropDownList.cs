@@ -22,7 +22,6 @@ namespace UnityEngine.UI.Extensions
 		public System.Action<int> OnSelectionChanged;
 		// fires when selection is changed;
 
-		//private bool isInitialized = false;
 		private bool _isPanelActive = false;
 		private bool _hasDrawnOnce = false;
 
@@ -34,7 +33,7 @@ namespace UnityEngine.UI.Extensions
 		private RectTransform _scrollPanelRT;
 		private RectTransform _scrollBarRT;
 		private RectTransform _slidingAreaRT;
-		//   private RectTransform scrollHandleRT;
+
 		private RectTransform _itemsPanelRT;
 		private Canvas _canvas;
 		private RectTransform _canvasRT;
@@ -46,7 +45,7 @@ namespace UnityEngine.UI.Extensions
 		private GameObject _itemTemplate;
 
 		[SerializeField]
-		private float _scrollBarWidth = 20.0f;
+		private float _scrollBarWidth = 40.0f;
 
 		public float ScrollBarWidth {
 			get { return _scrollBarWidth; }
@@ -55,8 +54,7 @@ namespace UnityEngine.UI.Extensions
 				RedrawPanel ();
 			}
 		}
-
-		//    private int scrollOffset; //offset of the selected item
+			
 		private int _selectedIndex = 0;
 
 
@@ -87,14 +85,11 @@ namespace UnityEngine.UI.Extensions
 				_overlayRT = _rectTransform.FindChild ("Overlay").GetComponent<RectTransform> ();
 				_overlayRT.gameObject.SetActive (false);
 
-
 				_scrollPanelRT = _overlayRT.FindChild ("ScrollPanel").GetComponent<RectTransform> ();
 				_scrollBarRT = _scrollPanelRT.FindChild ("Scrollbar").GetComponent<RectTransform> ();
 				_slidingAreaRT = _scrollBarRT.FindChild ("SlidingArea").GetComponent<RectTransform> ();
-				//  scrollHandleRT = slidingAreaRT.FindChild("Handle").GetComponent<RectTransform>();
 				_itemsPanelRT = _scrollPanelRT.FindChild ("Items").GetComponent<RectTransform> ();
-				//itemPanelLayout = itemsPanelRT.gameObject.GetComponent<LayoutGroup>();
-
+	
 				_canvas = GetComponentInParent<Canvas> ();
 				_canvasRT = _canvas.GetComponent<RectTransform> ();
 
@@ -161,10 +156,13 @@ namespace UnityEngine.UI.Extensions
 			RebuildPanel ();
 		}
 
-
+		public void Clear() {
+			Items.Clear ();
+		}
 
 		public void AddItems (List<DropDownListItem> list)
 		{
+			Items.Clear ();
 			Items.AddRange (list);
 			RebuildPanel ();
 		}
@@ -221,7 +219,7 @@ namespace UnityEngine.UI.Extensions
 				OnSelectionChanged (indx);
 
 			_selectedIndex = indx;
-			ToggleDropdownPanel(false);
+			//ToggleDropdownPanel(false);
 			UpdateSelected ();
 		}
 

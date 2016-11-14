@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,16 +18,14 @@ public class LoadCustomConfigurationViewModel : MonoBehaviour
 	}
 
 
-	public void UpdateList ()
+	public void RefreshList ()
 	{
-		DropDownList list = GameObject.Find ("CustomConfigsDropDownList").GetComponent<DropDownList> ();
+		DropDownList dropDownConfigFilesList = GameObject.Find ("CustomConfigsDropDownList").GetComponent<DropDownList> ();
+		dropDownConfigFilesList.Clear ();
 		string[] fileEntries = Directory.GetFiles (ApplicationPath);
 		foreach (string fileName in fileEntries) {
 			DropDownListItem listItem = new DropDownListItem (Path.GetFileName (fileName), fileName);
-			list.AddItem (listItem);
-			// TODO mejorar esto. la lista n0 se llena cuando la escena se carga
+			dropDownConfigFilesList.AddItem (listItem);
 		}
-
-
 	}
 }

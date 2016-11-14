@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SaveConfigurationSceneViewModel : MonoBehaviour
 {
 	private ConfigurationDTO configuration;
+
+	private Text messagesText;
 
 	public SaveConfigurationSceneViewModel ()
 	{
@@ -33,8 +36,12 @@ public class SaveConfigurationSceneViewModel : MonoBehaviour
 
 	private void SaveConfigurationDTOToFile ()
 	{
-		SaveConfiguration.Save (this.configuration);
+		messagesText = GameObject.Find ("MessagesText").GetComponent<Text> ();
+		try {
+			SaveConfiguration.Save (this.configuration);
+			messagesText.text = configuration.Name + " Saved!";
+		} catch (Exception ex) {
+			messagesText.text = "Error at saving " + configuration.Name;
+		}
 	}
-
-
 }
