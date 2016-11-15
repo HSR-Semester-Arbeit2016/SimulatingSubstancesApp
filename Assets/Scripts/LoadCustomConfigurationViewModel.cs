@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class LoadCustomConfigurationViewModel : MonoBehaviour
 	private string applicationPath;
 
 	private string ApplicationPath { get { return applicationPath; } set { applicationPath = value; } }
+
+	private ConfigurationDTO configuration;
 
 	void Start ()
 	{
@@ -28,4 +31,45 @@ public class LoadCustomConfigurationViewModel : MonoBehaviour
 			dropDownConfigFilesList.AddItem (listItem);
 		}
 	}
+
+	public void LoadSelectedFile ()
+	{
+		this.LoadConfigurationDTOfromFile ();
+		this.SaveDataToPlayerPrefs ();
+	}
+
+	private void LoadConfigurationDTOfromFile ()
+	{
+		try {
+			DropDownList dropDownConfigFilesList = GameObject.Find ("CustomConfigsDropDownList").GetComponent<DropDownList> ();
+			DropDownListItem selectedItem = dropDownConfigFilesList.SelectedItem;
+			Debug.Log("Loaded config file with path: " + selectedItem.FilePAth);
+			configuration = FileManager.Load (selectedItem.Caption);
+			Debug.Log("Loaded config file: " + configuration.Name);
+		} catch (Exception ex) {
+			this.ShowMessage ("Error at loading file", ex);
+		}
+	}
+
+
+	private void SaveDataToPlayerPrefs ()
+	{
+		PlayerPrefs.SetString ("ConfigurationName", this.configuration.Name);
+		PlayerPrefs.SetFloat ("BlurLevel", this.configuration.BlurLevel);
+		PlayerPrefs.SetFloat ("TunnelLevel", this.configuration.TunnelLevel);
+		PlayerPrefs.SetInt ("DelayLevel", this.configuration.Delay);
+		PlayerPrefs.SetInt ("MotionBlur", this.configuration.MotionBlur);
+		PlayerPrefs.SetInt ("RedColorDistortion", this.configuration.RedColor);    
+		PlayerPrefs.SetInt ("RandomEffects", this.configuration.Randomness);
+	}
+
+
+	private void ShowMessage (string message, Exception ex)
+	{
+		Text messagesText = GameObject.Find ("MessagesText").GetComponent<Text> ();
+		messagesText.text = message + "\n" + ex.Message;
+	}
+
+
+
 }

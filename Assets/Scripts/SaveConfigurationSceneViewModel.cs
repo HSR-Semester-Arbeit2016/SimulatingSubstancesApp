@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class SaveConfigurationSceneViewModel : MonoBehaviour
 {
@@ -38,10 +39,16 @@ public class SaveConfigurationSceneViewModel : MonoBehaviour
 	{
 		messagesText = GameObject.Find ("MessagesText").GetComponent<Text> ();
 		try {
-			SaveConfiguration.Save (this.configuration);
+			FileManager.Save (this.configuration);
 			messagesText.text = configuration.Name + " Saved!";
 		} catch (Exception ex) {
-			messagesText.text = "Error at saving " + configuration.Name;
+			this.ShowMessage ("Error at saving " + configuration.Name, ex);
 		}
+	}
+
+
+	private void ShowMessage (string message, Exception ex)
+	{
+		messagesText.text = message + "\n" + ex.Message;
 	}
 }

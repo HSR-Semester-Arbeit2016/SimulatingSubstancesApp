@@ -219,13 +219,16 @@ namespace UnityEngine.UI.Extensions
 				OnSelectionChanged (indx);
 
 			_selectedIndex = indx;
+			SelectedItem = (_selectedIndex > -1 && _selectedIndex < Items.Count) ? Items [_selectedIndex] : null;
+			Debug.Log ("SelectedItem1: " + SelectedItem.Caption);
 			//ToggleDropdownPanel(false);
 			UpdateSelected ();
 		}
 
 		private void UpdateSelected ()
 		{
-			SelectedItem = (_selectedIndex > -1 && _selectedIndex < Items.Count) ? Items [_selectedIndex] : null;
+			//SelectedItem = (_selectedIndex > -1 && _selectedIndex < Items.Count) ? Items [_selectedIndex] : null;
+			Debug.Log ("SelectedItem2: " + SelectedItem.Caption);
 			if (SelectedItem == null)
 				return;
 
@@ -246,6 +249,8 @@ namespace UnityEngine.UI.Extensions
 			for (int i = 0; i < _itemsPanelRT.childCount; i++) {
 				_panelItems [i].btnImg.color = (_selectedIndex == i) ? _mainButton.btn.colors.highlightedColor : new Color (0, 0, 0, 0);
 			}
+
+
 		}
 
 
