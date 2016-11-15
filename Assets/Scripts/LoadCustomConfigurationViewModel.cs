@@ -43,9 +43,9 @@ public class LoadCustomConfigurationViewModel : MonoBehaviour
 		try {
 			DropDownList dropDownConfigFilesList = GameObject.Find ("CustomConfigsDropDownList").GetComponent<DropDownList> ();
 			DropDownListItem selectedItem = dropDownConfigFilesList.SelectedItem;
-			Debug.Log("Loaded config file with path: " + selectedItem.FilePAth);
+			Debug.Log ("Loaded config file with path: " + selectedItem.FilePAth);
 			configuration = FileManager.Load (selectedItem.Caption);
-			Debug.Log("Loaded config file: " + configuration.Name);
+			Debug.Log ("Loaded config file: " + configuration.Name);
 		} catch (Exception ex) {
 			this.ShowMessage ("Error at loading file", ex);
 		}
@@ -70,6 +70,17 @@ public class LoadCustomConfigurationViewModel : MonoBehaviour
 		messagesText.text = message + "\n" + ex.Message;
 	}
 
-
+	public void Delete ()
+	{
+		try {
+			DropDownList dropDownConfigFilesList = GameObject.Find ("CustomConfigsDropDownList").GetComponent<DropDownList> ();
+			DropDownListItem selectedItem = dropDownConfigFilesList.SelectedItem;
+			Debug.Log ("File will be deleted: " + selectedItem.FilePAth);
+			FileManager.DeleteFile (selectedItem.Caption);
+			dropDownConfigFilesList.RemoveItem(selectedItem);
+		} catch (Exception ex) {
+			this.ShowMessage ("Error at deleting file", ex);
+		}
+	}
 
 }

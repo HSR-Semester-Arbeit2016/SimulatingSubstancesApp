@@ -7,16 +7,15 @@ using UnityStandardAssets.ImageEffects;
 public class SimulatingViewModel : MonoBehaviour
 {
 
-	private float timeLeft = 180.0f;
 
 	void Start ()
 	{
-		this.UpdateBlurValue (PlayerPrefs.GetFloat("BlurLevel"));
-		this.UpdateTunnelValue (PlayerPrefs.GetFloat("TunnelLevel"));
-		this.UpdateDelay (PlayerPrefs.GetInt("DelayLevel"));
-        this.UpdateMotionBlur(PlayerPrefs.GetInt("MotionBlur"));
-		this.UpdateRedColorDistortion (PlayerPrefs.GetInt("RedColorDistortion"));
-        this.UpdateRandomEffects(PlayerPrefs.GetInt("RandomEffects"));
+		this.UpdateBlurValue (PlayerPrefs.GetFloat ("BlurLevel"));
+		this.UpdateTunnelValue (PlayerPrefs.GetFloat ("TunnelLevel"));
+		this.UpdateDelay (PlayerPrefs.GetInt ("DelayLevel"));
+		this.UpdateMotionBlur (PlayerPrefs.GetInt ("MotionBlur"));
+		this.UpdateRedColorDistortion (PlayerPrefs.GetInt ("RedColorDistortion"));
+		this.UpdateRandomEffects (PlayerPrefs.GetInt ("RandomEffects"));
 	}
 
 	private void UpdateBlurValue (float value)
@@ -26,8 +25,8 @@ public class SimulatingViewModel : MonoBehaviour
 			blurValueText.text = value.ToString ();
 			BlurOptimized cameraLeftBlur = GameObject.Find ("StereoCameraLeft").GetComponent<BlurOptimized> ();
 			BlurOptimized cameraRightBlur = GameObject.Find ("StereoCameraRight").GetComponent<BlurOptimized> ();
-            cameraLeftBlur.blurSize = value;
-            cameraRightBlur.blurSize = value;
+			cameraLeftBlur.blurSize = value;
+			cameraRightBlur.blurSize = value;
 			this.UpdateToggle ("BlurToggle");
 		}
 	}
@@ -39,8 +38,8 @@ public class SimulatingViewModel : MonoBehaviour
 			tunnelValueText.text = value.ToString ();
 			AlcoholTiltShift cameraLeftTunnel = GameObject.Find ("StereoCameraLeft").GetComponent<AlcoholTiltShift> ();			
 			AlcoholTiltShift cameraRightTunnel = GameObject.Find ("StereoCameraRight").GetComponent<AlcoholTiltShift> ();
-            cameraLeftTunnel.blurArea = value;
-            cameraRightTunnel.blurArea = value;
+			cameraLeftTunnel.blurArea = value;
+			cameraRightTunnel.blurArea = value;
 			this.UpdateToggle ("TunnelToggle");
 		}
 	}
@@ -51,33 +50,32 @@ public class SimulatingViewModel : MonoBehaviour
 		if (value > 0) {
 			Delay delayLeft = GameObject.Find ("StereoCameraLeft").GetComponent<Delay> ();
 			Delay delayRight = GameObject.Find ("StereoCameraRight").GetComponent<Delay> ();
-            delayLeft.IsEnabled = true;
-            delayRight.IsEnabled = true;
-            this.UpdateToggle ("DelayToggle");
+			delayLeft.IsEnabled = true;
+			delayRight.IsEnabled = true;
+			this.UpdateToggle ("DelayToggle");
 		}
 	}
 
-    private void UpdateMotionBlur(int value)
-    {
-        if (value > 0)
-        {
-            CameraMotionBlur motionBlurLeft = GameObject.Find("StereoCameraLeft").GetComponent<CameraMotionBlur>();
-            CameraMotionBlur motionBlurRight = GameObject.Find("StereoCameraRight").GetComponent<CameraMotionBlur>();
-            motionBlurLeft.enabled = true;
-            motionBlurRight.enabled = true;
-            this.UpdateToggle("MotionBlurToggle");
-        }
-    }
+	private void UpdateMotionBlur (int value)
+	{
+		if (value > 0) {
+			CameraMotionBlur motionBlurLeft = GameObject.Find ("StereoCameraLeft").GetComponent<CameraMotionBlur> ();
+			CameraMotionBlur motionBlurRight = GameObject.Find ("StereoCameraRight").GetComponent<CameraMotionBlur> ();
+			motionBlurLeft.enabled = true;
+			motionBlurRight.enabled = true;
+			this.UpdateToggle ("MotionBlurToggle");
+		}
+	}
 
-    private void UpdateRedColorDistortion (int value)
+	private void UpdateRedColorDistortion (int value)
 	{
 		if (value > 0) {
 			ColorCorrectionCurves colorCorrectionCurvesLeft = GameObject.Find ("StereoCameraLeft").GetComponent<ColorCorrectionCurves> ();
 			ColorCorrectionCurves colorCorrectionCurvesRight = GameObject.Find ("StereoCameraRight").GetComponent<ColorCorrectionCurves> ();
 			colorCorrectionCurvesLeft.enabled = true;
 			colorCorrectionCurvesRight.enabled = true;
-            this.UpdateToggle("RedColorToggle");
-        }
+			this.UpdateToggle ("RedColorToggle");
+		}
 	}
 
 	private void UpdateRandomEffects (int value)

@@ -147,6 +147,8 @@ namespace UnityEngine.UI.Extensions
 		{
 			Items.Remove (item);
 			RebuildPanel ();
+			_mainButton.txt.text = "";
+
 		}
 
 
@@ -219,16 +221,14 @@ namespace UnityEngine.UI.Extensions
 				OnSelectionChanged (indx);
 
 			_selectedIndex = indx;
-			SelectedItem = (_selectedIndex > -1 && _selectedIndex < Items.Count) ? Items [_selectedIndex] : null;
-			Debug.Log ("SelectedItem1: " + SelectedItem.Caption);
 			//ToggleDropdownPanel(false);
 			UpdateSelected ();
 		}
 
 		private void UpdateSelected ()
 		{
-			//SelectedItem = (_selectedIndex > -1 && _selectedIndex < Items.Count) ? Items [_selectedIndex] : null;
-			Debug.Log ("SelectedItem2: " + SelectedItem.Caption);
+			SelectedItem = (_selectedIndex > -1 && _selectedIndex < Items.Count) ? Items [_selectedIndex] : null;
+			Debug.Log ("UpdateSelected: " + SelectedItem.Caption);
 			if (SelectedItem == null)
 				return;
 
