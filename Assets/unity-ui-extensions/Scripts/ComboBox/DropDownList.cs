@@ -148,7 +148,6 @@ namespace UnityEngine.UI.Extensions
 			Items.Remove (item);
 			RebuildPanel ();
 			_mainButton.txt.text = "";
-
 		}
 
 

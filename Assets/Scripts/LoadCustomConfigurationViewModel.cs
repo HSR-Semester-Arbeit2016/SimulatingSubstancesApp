@@ -82,5 +82,4 @@ public class LoadCustomConfigurationViewModel : MonoBehaviour
 			this.ShowMessage ("Error at deleting file", ex);
 		}
 	}
-
 }
