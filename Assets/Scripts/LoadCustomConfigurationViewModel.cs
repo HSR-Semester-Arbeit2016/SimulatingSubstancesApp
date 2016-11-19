@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
-
 
 public class LoadCustomConfigurationViewModel : MonoBehaviour
 {
@@ -23,12 +21,13 @@ public class LoadCustomConfigurationViewModel : MonoBehaviour
 
 	public void RefreshList ()
 	{
-		DropDownList dropDownConfigFilesList = GameObject.Find ("CustomConfigsDropDownList").GetComponent<DropDownList> ();
-		dropDownConfigFilesList.Clear ();
+		ConfigFilesScrollList dropDownConfigFilesList = GameObject.Find ("GameController").GetComponent<ConfigFilesScrollList> ();
+
 		string[] fileEntries = Directory.GetFiles (ApplicationPath);
 		foreach (string fileName in fileEntries) {
-			DropDownListItem listItem = new DropDownListItem (Path.GetFileName (fileName), fileName);
-			dropDownConfigFilesList.AddItem (listItem);
+			//TODO Refactor this with the new list
+			//DropDownListItem listItem = new DropDownListItem (Path.GetFileName (fileName), fileName);
+			//dropDownConfigFilesList.AddItem (listItem);
 		}
 	}
 
@@ -41,10 +40,11 @@ public class LoadCustomConfigurationViewModel : MonoBehaviour
 	private void LoadConfigurationDTOfromFile ()
 	{
 		try {
-			DropDownList dropDownConfigFilesList = GameObject.Find ("CustomConfigsDropDownList").GetComponent<DropDownList> ();
-			DropDownListItem selectedItem = dropDownConfigFilesList.SelectedItem;
-			Debug.Log ("Loaded config file with path: " + selectedItem.FilePAth);
-			configuration = FileManager.Load (selectedItem.Caption);
+			ConfigFilesScrollList dropDownConfigFilesList = GameObject.Find ("GameController").GetComponent<ConfigFilesScrollList> ();
+			//dropDownConfigFilesList.SelectedFile
+		
+			//Debug.Log ("Loaded config file with path: " + selectedItem.FilePAth);
+			//configuration = FileManager.Load (selectedItem.Caption);
 			Debug.Log ("Loaded config file: " + configuration.Name);
 		} catch (Exception ex) {
 			this.ShowMessage ("Error at loading file", ex);
@@ -73,11 +73,11 @@ public class LoadCustomConfigurationViewModel : MonoBehaviour
 	public void Delete ()
 	{
 		try {
-			DropDownList dropDownConfigFilesList = GameObject.Find ("CustomConfigsDropDownList").GetComponent<DropDownList> ();
-			DropDownListItem selectedItem = dropDownConfigFilesList.SelectedItem;
+			ConfigFilesScrollList dropDownConfigFilesList = GameObject.Find ("GameController").GetComponent<ConfigFilesScrollList> ();
+			/*DropDownListItem selectedItem = dropDownConfigFilesList.SelectedItem;
 			Debug.Log ("File will be deleted: " + selectedItem.FilePAth);
 			FileManager.DeleteFile (selectedItem.Caption);
-			dropDownConfigFilesList.RemoveItem(selectedItem);
+			dropDownConfigFilesList.RemoveItem (selectedItem); */
 		} catch (Exception ex) {
 			this.ShowMessage ("Error at deleting file", ex);
 		}
