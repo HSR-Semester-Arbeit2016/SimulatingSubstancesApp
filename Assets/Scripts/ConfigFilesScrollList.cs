@@ -24,7 +24,7 @@ public class ConfigFilesScrollList : MonoBehaviour
 		"Very Drunk"
 	});
 
-	private ReadOnlyCollection<string> readOnlyConfigurations = 
+	private readonly ReadOnlyCollection<string> readOnlyConfigurations = 
 		new ReadOnlyCollection<string> (defaultConfigurations);
 
 	public ConfigFile SelectedConfig { get; private set; }

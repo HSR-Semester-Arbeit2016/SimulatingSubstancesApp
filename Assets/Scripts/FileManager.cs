@@ -10,7 +10,6 @@ public class FileManager
 
 	public static void Save (ConfigurationDTO configuration)
 	{
-		Debug.Log ("SaveConfiguration save called");
 		BinaryFormatter bf = new BinaryFormatter ();
 		FileStream file = File.Create (Application.persistentDataPath + "/" + configuration.Name);
 		bf.Serialize (file, configuration);

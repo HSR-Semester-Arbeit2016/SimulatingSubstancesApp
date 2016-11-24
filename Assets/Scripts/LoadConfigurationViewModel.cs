@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,25 +21,43 @@ public class LoadConfigurationViewModel : MonoBehaviour
 
 	private Text messagesText;
 
+
+	private readonly static List<string> defaultConfigurations = new List<string> (new string[] {
+		"Sober",
+		"Slightly Drunk",
+		"Drunk",
+		"Very Drunk"
+	});
+
+	private readonly ReadOnlyCollection<string> readOnlyConfigurations = 
+		new ReadOnlyCollection<string> (defaultConfigurations);
+
+
 	void Start ()
 	{
 		ApplicationPath = Application.persistentDataPath;
 		ConfigFilesList = GameObject.Find ("GameController").GetComponent<ConfigFilesScrollList> ();
 		messagesText = GameObject.Find ("MessagesText").GetComponent<Text> ();
+		configuration = new ConfigurationDTO ();
 	}
 
 	public void LoadSelectedFile ()
 	{
-		this.LoadConfigurationDTOfromFile ();
+		this.LoadConfigurationDTOfromConfig ();
 		this.SaveDataToPlayerPrefs ();
 	}
 
-	private void LoadConfigurationDTOfromFile ()
+	private void LoadConfigurationDTOfromConfig ()
 	{
 		try {
 			ConfigFile selectedConfig = ConfigFilesList.SelectedConfig;
-			configuration = FileManager.Load (selectedConfig.FileName);
-			this.ShowConfigFromDTo ();
+			if (readOnlyConfigurations.Contains (selectedConfig.FileName)) {
+				this.LoadDefaultConfig (selectedConfig.FileName);
+				this.ShowConfigFromDTo ();
+			} else {
+				configuration = FileManager.Load (selectedConfig.FileName);
+				this.ShowConfigFromDTo ();
+			}
 		} catch (Exception ex) {
 			this.ShowErrorMessage ("Error at loading configuration", ex);
 		}
@@ -89,5 +108,71 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		messagesText.text += "\nMotion Blur: " + (this.configuration.MotionBlur == 0 ? "Off" : "On");  
 		messagesText.text += "\nRedColor Distortion: " + (this.configuration.RedColor == 0 ? "Off" : "On");
 		messagesText.text += "\nRandom Effects: " + (this.configuration.Randomness == 0 ? "Off" : "On");
+	}
+
+	private void LoadDefaultConfig (string value)
+	{
+		switch (value) {
+		case "Sober":
+			this.LoadSoberConfig ();
+			break;    
+		case "Slightly Drunk":
+			this.LoadSlightlyDrunkConfig ();
+			break;
+		case "Drunk":
+			this.LoadDrunkConfig ();
+			break;
+		case "Very Drunk":
+			this.LoadVeryDrunkConfig ();
+			break;
+		default:
+			this.LoadSoberConfig ();
+			break;
+		}
+	}
+
+	private void LoadSoberConfig ()
+	{
+		this.configuration.Name = "Sober";
+		this.configuration.BlurLevel = 0;
+		this.configuration.TunnelLevel = 0;
+		this.configuration.Delay = 0;
+		this.configuration.MotionBlur = 0;
+		this.configuration.RedColor = 0;    
+		this.configuration.Randomness = 0;
+	}
+
+
+	private void LoadSlightlyDrunkConfig ()
+	{
+		this.configuration.Name = "Slightly Drunk";
+		this.configuration.BlurLevel = 2;
+		this.configuration.TunnelLevel = 0;
+		this.configuration.Delay = 0;
+		this.configuration.MotionBlur = 0;
+		this.configuration.RedColor = 0;    
+		this.configuration.Randomness = 0;
+	}
+
+	private void LoadDrunkConfig ()
+	{
+		this.configuration.Name = "Drunk";
+		this.configuration.BlurLevel = 3;
+		this.configuration.TunnelLevel = 0;
+		this.configuration.Delay = 0;
+		this.configuration.MotionBlur = 0;
+		this.configuration.RedColor = 0;    
+		this.configuration.Randomness = 0;
+	}
+
+	private void LoadVeryDrunkConfig ()
+	{
+		this.configuration.Name = "Very Drunk";
+		this.configuration.BlurLevel = 4;
+		this.configuration.TunnelLevel = 0;
+		this.configuration.Delay = 0;
+		this.configuration.MotionBlur = 0;
+		this.configuration.RedColor = 0;    
+		this.configuration.Randomness = 0;
 	}
 }
