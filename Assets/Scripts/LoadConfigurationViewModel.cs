@@ -49,6 +49,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 	{
 		this.LoadConfigurationDTOfromConfig ();
 		this.SaveDataToPlayerPrefs ();
+		this.LoadCorrespondingScene ();
 	}
 
 	private void ShowSelectedConfigIndex (int index)
@@ -75,6 +76,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 
 	private void SaveDataToPlayerPrefs ()
 	{
+		Debug.Log ("SaveDataToPlayerPrefs in LoadConfigurationViewModelCalled");
 		PlayerPrefs.SetString ("ConfigurationName", this.configuration.Name);
 		PlayerPrefs.SetFloat ("BlurLevel", this.configuration.BlurLevel);
 		PlayerPrefs.SetFloat ("TunnelLevel", this.configuration.TunnelLevel);
@@ -89,25 +91,18 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		switch (value) {
 		case "Sober":
 			this.LoadSoberConfig ();
-			this.LoadScene (2);
 			break;    
 		case "Slightly Drunk":
 			this.LoadSlightlyDrunkConfig ();
-			this.LoadScene (2);
 			break;
 		case "Drunk":
 			this.LoadDrunkConfig ();
-			this.LoadScene (2);
 			break;
 		case "Very Drunk":
 			this.LoadVeryDrunkConfig ();
-			this.LoadScene (2);
 			break;
 		case "Create":
-			this.LoadScene (1);
-			break;
 		case "Delete":
-			this.LoadScene (4);
 			break;
 		default:
 			this.LoadSoberConfig ();
@@ -168,5 +163,28 @@ public class LoadConfigurationViewModel : MonoBehaviour
 	private void ShowErrorMessage (string message, Exception exception)
 	{
 		this.errormessagesText.text = message + "\n" + exception.Message;
+	}
+
+	private void LoadCorrespondingScene ()
+	{
+		ConfigFile selectedConfig = ConfigFilesList.SelectedConfig;
+		string value = selectedConfig.FileName;
+		switch (value) {
+		case "Sober":
+		case "Slightly Drunk":
+		case "Drunk":
+		case "Very Drunk":
+			this.LoadScene (2);
+			break;    
+		case "Create":
+			this.LoadScene (1);
+			break;
+		case "Delete":
+			this.LoadScene (4);
+			break;
+		default:
+			this.LoadScene (2);
+			break;
+		}
 	}
 }

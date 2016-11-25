@@ -21,7 +21,6 @@ public class ConfigurationViewModel : MonoBehaviour
 	{
 		PlayerPrefs.SetFloat ("TunnelLevel", newTunnelValue);
 		this.SetEffectValueText (newTunnelValue, "TunnelLevelText");
-		this.SetDrunkLevelText (newTunnelValue, "SelectedTunnelAlcoholLevelText");
 	}
 
 
@@ -29,9 +28,7 @@ public class ConfigurationViewModel : MonoBehaviour
 	{	
 		PlayerPrefs.SetFloat ("BlurLevel", newBlurValue);
 		this.SetEffectValueText (newBlurValue, "BlurLevelText");
-		this.SetDrunkLevelText (newBlurValue, "SelectedBlurAlcoholLevelText");
 	}
-
 
 	public void SetDelay (int value)
 	{
@@ -75,22 +72,6 @@ public class ConfigurationViewModel : MonoBehaviour
 		blurValueText.text = value.ToString ();
 	}
 
-	private void SetDrunkLevelText (float newValue, String textFieldName)
-	{
-		Text selectedAlcoholLevelText = GameObject.Find (textFieldName).GetComponent<Text> ();
-		selectedAlcoholLevelText.text = newValue.ToString ();
-		/*
-		var myswitch = new Dictionary <Func<float,bool>, Action> { 
-			{ x => x == 0 ,    () => selectedAlcoholLevelText.text = this.soberLevel }, 
-			{ x => x < 4 ,    () => selectedAlcoholLevelText.text = this.soberLevel }, 
-			{ x => x < 8 ,    () => selectedAlcoholLevelText.text = this.intoxicatedLevel },
-			{ x => x < 12,    () => selectedAlcoholLevelText.text = this.drunkLevel },
-			{ x => x < 15 ,   () => selectedAlcoholLevelText.text = this.veryDrunkLevel }  
-		};
-		myswitch.First (sw => sw.Key (newValue)).Value ();*/
-
-	}
-
 	private void UpdateSliders ()
 	{
 		UpdateSlider ("BlurSlider", "BlurLevel");
@@ -128,9 +109,7 @@ public class ConfigurationViewModel : MonoBehaviour
 	private void ResetTextFields ()
 	{
 		this.SetEffectValueText (0, "BlurLevelText");
-		this.SetDrunkLevelText (0, "SelectedBlurAlcoholLevelText");
 		this.SetEffectValueText (0, "TunnelLevelText");
-		this.SetDrunkLevelText (0, "SelectedTunnelAlcoholLevelText");
 	}
 
 	private void ResetPlayerPrefs ()
