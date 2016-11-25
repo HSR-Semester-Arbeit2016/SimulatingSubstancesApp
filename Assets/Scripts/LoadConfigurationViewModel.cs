@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LoadConfigurationViewModel : MonoBehaviour
 {
@@ -19,47 +20,66 @@ public class LoadConfigurationViewModel : MonoBehaviour
 
 	private ConfigFilesScrollList ConfigFilesList { get { return configFilesList; } set { configFilesList = value; } }
 
-	private Text messagesText;
+	private Text errormessagesText;
 
 
 	private readonly static List<string> defaultConfigurations = new List<string> (new string[] {
 		"Sober",
 		"Slightly Drunk",
 		"Drunk",
-		"Very Drunk"
+		"Very Drunk",
+		"Create",
+		"Delete"
 	});
 
 	private readonly ReadOnlyCollection<string> readOnlyConfigurations = 
 		new ReadOnlyCollection<string> (defaultConfigurations);
 
+	public System.Action<int> OnSelectionChanged;
 
 	void Start ()
 	{
 		ApplicationPath = Application.persistentDataPath;
 		ConfigFilesList = GameObject.Find ("GameController").GetComponent<ConfigFilesScrollList> ();
-		messagesText = GameObject.Find ("MessagesText").GetComponent<Text> ();
+		errormessagesText = GameObject.Find ("ErrorMessagesText").GetComponent<Text> ();
 		configuration = new ConfigurationDTO ();
+		ConfigFilesList.OnSelectionChanged = ShowSelectedConfigIndex;
+	
 	}
 
-	public void LoadSelectedFile ()
+	public void LoadSelectedConfig ()
 	{
 		this.LoadConfigurationDTOfromConfig ();
 		this.SaveDataToPlayerPrefs ();
+	}
+
+	void OnGUI ()
+	{
+		var e = Event.current;
+		if (e.isMouse && e.type == EventType.MouseDown && e.clickCount == 2) {
+			// Double click event
+			Debug.Log ("Double click");
+		}
+	}
+
+	private void ShowSelectedConfigIndex (int something)
+	{
+		Debug.Log ("Config index: " + something.ToString ());
 	}
 
 	private void LoadConfigurationDTOfromConfig ()
 	{
 		try {
 			ConfigFile selectedConfig = ConfigFilesList.SelectedConfig;
+			Debug.Log ("Selected Config Name: " + selectedConfig.FileName);
 			if (readOnlyConfigurations.Contains (selectedConfig.FileName)) {
 				this.LoadDefaultConfig (selectedConfig.FileName);
-				this.ShowConfigFromDTo ();
 			} else {
 				configuration = FileManager.Load (selectedConfig.FileName);
-				this.ShowConfigFromDTo ();
 			}
 		} catch (Exception ex) {
-			this.ShowErrorMessage ("Error at loading configuration", ex);
+			this.ShowErrorMessage ("Error at loading configuration:", ex);
+			Debug.Log ("Error at loading configuration");
 		}
 	}
 
@@ -75,55 +95,30 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		PlayerPrefs.SetInt ("RandomEffects", this.configuration.Randomness);
 	}
 
-	public void Delete ()
-	{
-		try {
-			this.ResetMessages ();
-			ConfigFile selectedConfig = ConfigFilesList.SelectedConfig;
-			FileManager.DeleteFile (selectedConfig.FileName);
-			configFilesList.RemoveSelectedConfig ();
-		} catch (TriedToDeleteDefaultConfigException ex) {
-			this.ShowErrorMessage ("Error at deleting configuration:", ex);
-		} catch (Exception ex) {
-			this.ShowErrorMessage ("Error at deleting configuration:", ex);
-		}
-	}
-
-	private void ShowErrorMessage (string message, Exception ex)
-	{
-		messagesText.text = message + "\n" + ex.Message;
-	}
-
-	private void ResetMessages ()
-	{
-		messagesText.text = "";
-	}
-
-	private void ShowConfigFromDTo ()
-	{
-		messagesText.text = "File Name: " + this.configuration.Name;
-		messagesText.text = "Blur Level: " + this.configuration.BlurLevel.ToString ();
-		messagesText.text += "\nTunnel Level: " + this.configuration.TunnelLevel.ToString ();
-		messagesText.text += "\nDelay Level: " + this.configuration.Delay.ToString ();
-		messagesText.text += "\nMotion Blur: " + (this.configuration.MotionBlur == 0 ? "Off" : "On");  
-		messagesText.text += "\nRedColor Distortion: " + (this.configuration.RedColor == 0 ? "Off" : "On");
-		messagesText.text += "\nRandom Effects: " + (this.configuration.Randomness == 0 ? "Off" : "On");
-	}
-
 	private void LoadDefaultConfig (string value)
 	{
 		switch (value) {
 		case "Sober":
 			this.LoadSoberConfig ();
+			this.LoadScene (2);
 			break;    
 		case "Slightly Drunk":
 			this.LoadSlightlyDrunkConfig ();
+			this.LoadScene (2);
 			break;
 		case "Drunk":
 			this.LoadDrunkConfig ();
+			this.LoadScene (2);
 			break;
 		case "Very Drunk":
 			this.LoadVeryDrunkConfig ();
+			this.LoadScene (2);
+			break;
+		case "Create":
+			this.LoadScene (1);
+			break;
+		case "Delete":
+			this.LoadScene (4);
 			break;
 		default:
 			this.LoadSoberConfig ();
@@ -174,5 +169,15 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0;    
 		this.configuration.Randomness = 0;
+	}
+
+	private void LoadScene (int sceneIndex)
+	{
+		SceneManager.LoadScene (sceneIndex);
+	}
+
+	private void ShowErrorMessage (string message, Exception exception)
+	{
+		this.errormessagesText.text= message + "\n" + exception.Message;
 	}
 }

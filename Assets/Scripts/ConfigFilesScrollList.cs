@@ -10,10 +10,12 @@ public class ConfigFilesScrollList : MonoBehaviour
 {
 	public GameObject listButton;
 	public Transform contentPanel;
-	private List<ConfigFile> configFilesList;
+	public System.Action<int> OnSelectionChanged;
 	private int index;
 
 	private int Index { get { return index; } set { this.index = value; } }
+
+	private List<ConfigFile> configFilesList;
 
 	private List<ConfigFile> ConfigFilesList { get { return configFilesList; } set { configFilesList = value; } }
 
@@ -21,9 +23,11 @@ public class ConfigFilesScrollList : MonoBehaviour
 		"Sober",
 		"Slightly Drunk",
 		"Drunk",
-		"Very Drunk"
+		"Very Drunk",
+		"Create",
+		"Delete"
 	});
-
+		
 	private readonly ReadOnlyCollection<string> readOnlyConfigurations = 
 		new ReadOnlyCollection<string> (defaultConfigurations);
 
@@ -41,6 +45,13 @@ public class ConfigFilesScrollList : MonoBehaviour
 		this.FillListWithSavedConfigFiles ();	
 		this.FillListInGui ();
 	}
+
+
+	public ConfigFile this [int index] {
+		get { return configFilesList [index]; }
+	}
+
+
 
 	public void RemoveSelectedConfig ()
 	{
@@ -93,7 +104,8 @@ public class ConfigFilesScrollList : MonoBehaviour
 
 	private void  OnButtonClicked (int index)
 	{
-		Index = index;
 		SelectedConfig = configFilesList [index];
+		OnSelectionChanged (index);
+		Index = index;
 	}
 }
