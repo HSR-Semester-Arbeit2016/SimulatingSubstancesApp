@@ -51,8 +51,6 @@ public class ConfigFilesScrollList : MonoBehaviour
 		get { return configFilesList [index]; }
 	}
 
-
-
 	public void RemoveSelectedConfig ()
 	{
 		foreach (var config in readOnlyConfigurations) {
@@ -64,7 +62,6 @@ public class ConfigFilesScrollList : MonoBehaviour
 		this.ClearListInGui ();
 		this.FillListInGui ();
 	}
-
 
 	private void FillListWithDefaultConfigs ()
 	{
@@ -102,7 +99,7 @@ public class ConfigFilesScrollList : MonoBehaviour
 		contentPanel.DetachChildren ();
 	}
 
-	private void  OnButtonClicked (int index)
+	private void OnButtonClicked (int index)
 	{
 		SelectedConfig = configFilesList [index];
 		OnSelectionChanged (index);

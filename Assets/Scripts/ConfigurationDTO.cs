@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 [System.Serializable]
 public class ConfigurationDTO
 {
 
-	private  string configurationName = "";
+	private  string configurationName;
 
 	public string Name { get { return configurationName; } set { configurationName = value; } }
 
