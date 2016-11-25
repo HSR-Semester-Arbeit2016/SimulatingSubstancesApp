@@ -103,7 +103,7 @@ public class DeleteConfigViewModel : MonoBehaviour
 		messagesText.text += "\nConfiguration Name: " + this.configuration.Name;
 		messagesText.text += "\nBlur Level: " + this.configuration.BlurLevel.ToString ();
 		messagesText.text += "\nTunnel Level: " + this.configuration.TunnelLevel.ToString ();
-		messagesText.text += "\nDelay Level: " + this.configuration.Delay.ToString ();
+		messagesText.text += "\nDelay Level: " + (this.configuration.Delay == 0 ? "Off" : "On");  
 		messagesText.text += "\nMotion Blur: " + (this.configuration.MotionBlur == 0 ? "Off" : "On");  
 		messagesText.text += "\nRedColor Distortion: " + (this.configuration.RedColor == 0 ? "Off" : "On");
 		messagesText.text += "\nRandom Effects: " + (this.configuration.Randomness == 0 ? "Off" : "On");

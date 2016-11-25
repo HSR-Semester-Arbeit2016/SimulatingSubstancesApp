@@ -8,11 +8,7 @@ using System.Linq;
 
 public class ConfigurationViewModel : MonoBehaviour
 {
-	/*private readonly String soberLevel = "Sober";
-	private readonly String intoxicatedLevel = "Slightly intoxicated";
-	private readonly String drunkLevel = "Drunk";
-	private readonly String veryDrunkLevel = "Very drunk"; */
-
+	
 	void Start ()
 	{
 		this.SetBlurSize (PlayerPrefs.GetFloat ("BlurLevel"));

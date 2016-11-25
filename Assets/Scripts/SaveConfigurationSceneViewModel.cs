@@ -14,7 +14,7 @@ public class SaveConfigurationSceneViewModel : MonoBehaviour
 		this.configuration = new ConfigurationDTO ();
 	}
 
-	public void SaveToFile ()
+	public void SaveConfiguration ()
 	{
 		this.SaveDataToConfigurationDTO ();
 		this.SaveConfigurationDTOToFile ();
@@ -41,7 +41,7 @@ public class SaveConfigurationSceneViewModel : MonoBehaviour
 			FileManager.Save (this.configuration);
 			messagesText.text = configuration.Name + " Saved!";
 		} catch (Exception ex) {
-			this.ShowMessage ("Error at saving " + configuration.Name, ex);
+			this.ShowMessage ("Error at saving: " + configuration.Name, ex);
 		}
 	}
 
