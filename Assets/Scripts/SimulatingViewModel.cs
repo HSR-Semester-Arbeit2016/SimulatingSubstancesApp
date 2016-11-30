@@ -80,31 +80,12 @@ public class SimulatingViewModel : MonoBehaviour
 
 	private void UpdateRandomEffects (int value)
 	{
-		if (value == 1) {
-			this.UpdateToggle ("RandomToggle");
-			// TODO complete. We need a timer in order to trigger the changes in the different image effects
-			Debug.Log ("UpdateRandomEffects called");
-			int randomBlurLevel = this.GetRandomIntFromRange (0, 4);
-			Debug.Log ("GEnerateRandom called with: " + randomBlurLevel);
-
-		}
+		if (value > 0) {
+		    Randomization randomization = GameObject.Find("ARCamera").GetComponent<Randomization>();
+		    randomization.enabled = true;
+            this.UpdateToggle("RandomToggle");
+        }
 	}
-
-	private void GenerateRandomBlurEffects ()
-	{
-		if (PlayerPrefs.GetFloat ("BlurLevel") > 0) {
-			int randomBlurLevel = this.GetRandomIntFromRange (0, 4);
-			Debug.Log ("GEnerateRandomBlurEffects called with: " + randomBlurLevel);
-			//TODO complete this
-		} 
-	}
-
-	private int GetRandomIntFromRange (int from, int to)
-	{
-		System.Random rnd = new System.Random ();
-		return rnd.Next (from, to);
-	}
-
 
 	private void UpdateToggle (String toggleName)
 	{
