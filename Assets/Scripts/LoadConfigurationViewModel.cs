@@ -180,7 +180,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 			this.LoadScene (1);
 			break;
 		case "Delete":
-			this.LoadScene (4);
+			this.LoadScene (3);
 			break;
 		default:
 			this.LoadScene (2);
