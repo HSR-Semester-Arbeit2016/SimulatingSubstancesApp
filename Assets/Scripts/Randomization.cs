@@ -40,16 +40,15 @@ public class Randomization : MonoBehaviour {
 	    tunnelRangeLower = GetLowerRangeValue(tunnelLevelInitial, 1.5f, 0);
 
         Debug.Log("Randomization initialized!");
-
     }
 	
 	// Update is called once per frame
 	void Update ()
 	{
         var timeSpanElapsed = new TimeSpan(DateTime.Now.Ticks - internalTime);
-        var timeElapsed = timeSpanElapsed.TotalSeconds >= predefinedInterval;
+        var hasTimeElapsed = timeSpanElapsed.TotalSeconds >= predefinedInterval;
 
-        if (enabled && timeElapsed)
+        if (enabled && hasTimeElapsed)
         {
             blurLevelCurrent = DoRandomWalk(blurLevelCurrent, blurRangeLower, blurRangeUpper);
             UpdateBlurValue(blurLevelCurrent);
@@ -108,15 +107,15 @@ public class Randomization : MonoBehaviour {
         textComponent.text = value.ToString();
     }
 
-    private int GetRandomWalkDirection(float currentLevel, float rangeLowerBound, float rangeUpperBound)
+    private float GetRandomWalkDirection(float currentLevel, float rangeLowerBound, float rangeUpperBound)
     {
         int randomValue = rnd.Next(0, 9999);
         float currentLevelNormalized = (currentLevel - rangeLowerBound)/(rangeUpperBound - rangeLowerBound)*10000;
         
         if (randomValue < currentLevelNormalized - halvedStayRange)
-            return -1;
+            return -0.25f;
         else if (randomValue > currentLevelNormalized + halvedStayRange)
-            return 1;
+            return 0.25f;
         else
             return 0;
 

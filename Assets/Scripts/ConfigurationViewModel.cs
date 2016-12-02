@@ -11,23 +11,23 @@ public class ConfigurationViewModel : MonoBehaviour
 	
 	void Start ()
 	{
-		this.SetBlurSize (PlayerPrefs.GetFloat ("BlurLevel"));
-		this.SetTunnelValue (PlayerPrefs.GetFloat ("TunnelLevel"));
-		this.UpdateSliders ();
-		this.UpdateDropdowns ();
+		SetBlurSize (PlayerPrefs.GetFloat ("BlurLevel"));
+		SetTunnelValue (PlayerPrefs.GetFloat ("TunnelLevel"));
+		UpdateSliders ();
+		UpdateDropdowns ();
 	}
 
 	public void SetTunnelValue (float newTunnelValue)
 	{
 		PlayerPrefs.SetFloat ("TunnelLevel", newTunnelValue);
-		this.SetEffectValueText (newTunnelValue, "TunnelLevelText");
+		SetEffectValueText (newTunnelValue, "TunnelLevelText");
 	}
 
 
 	public void SetBlurSize (float newBlurValue)
 	{	
 		PlayerPrefs.SetFloat ("BlurLevel", newBlurValue);
-		this.SetEffectValueText (newBlurValue, "BlurLevelText");
+		SetEffectValueText (newBlurValue, "BlurLevelText");
 	}
 
 	public void SetDelay (int value)
@@ -60,10 +60,10 @@ public class ConfigurationViewModel : MonoBehaviour
 
 	public void Reset ()
 	{
-		this.ResetPlayerPrefs ();
-		this.ResetSliders ();
-		this.ResetTextFields ();
-		this.ResetDropdowns ();
+		ResetPlayerPrefs ();
+		ResetSliders ();
+		ResetTextFields ();
+		ResetDropdowns ();
 	}
 
 	private void SetEffectValueText (float value, String textFieldName)
@@ -108,8 +108,8 @@ public class ConfigurationViewModel : MonoBehaviour
 
 	private void ResetTextFields ()
 	{
-		this.SetEffectValueText (0, "BlurLevelText");
-		this.SetEffectValueText (0, "TunnelLevelText");
+		SetEffectValueText (0, "BlurLevelText");
+		SetEffectValueText (0, "TunnelLevelText");
 	}
 
 	private void ResetPlayerPrefs ()
