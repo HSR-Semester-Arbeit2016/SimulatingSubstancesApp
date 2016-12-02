@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.MetaData.UI;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 using Random = System.Random;
@@ -24,6 +25,8 @@ public class Randomization : MonoBehaviour {
     private Random rnd;
     private long internalTime;
 
+    //TODO: Refactor randomization/randomWalk into own class without using UI-Controls
+
     // Use this for initialization
     void Start ()
 	{
@@ -38,8 +41,9 @@ public class Randomization : MonoBehaviour {
 	    tunnelLevelCurrent = tunnelLevelInitial;
 	    tunnelRangeUpper = GetUpperRangeValue(tunnelLevelInitial, 1.5f, tunnelValueMax);
 	    tunnelRangeLower = GetLowerRangeValue(tunnelLevelInitial, 1.5f, 0);
-
+#if DEBUG
         Debug.Log("Randomization initialized!");
+#endif
     }
 	
 	// Update is called once per frame
@@ -83,22 +87,26 @@ public class Randomization : MonoBehaviour {
 
     private void UpdateBlurValue(float newValue)
     {
-        BlurOptimized leftComponent = GameObject.Find("StereoCameraLeft").GetComponent<BlurOptimized>();
-        BlurOptimized rightComponent = GameObject.Find("StereoCameraRight").GetComponent<BlurOptimized>();
+        BlurOptimized leftComponent = GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft).GetComponent<BlurOptimized>();
+        BlurOptimized rightComponent = GameObject.Find(SimulatingSubstancesControls.StereoCameraRight).GetComponent<BlurOptimized>();
         leftComponent.blurSize = newValue;
         rightComponent.blurSize = newValue;
-        SetEffectValueText(newValue, "BlurLevelText");
+        SetEffectValueText(newValue, SimulatingSubstancesControls.BlurLevelText);
+#if DEBUG
         Debug.Log(String.Format("Randomization: BlurValue was {0} and is now {1}", blurLevelInitial, newValue));
+#endif
     }
 
     private void UpdateTunnelValue(float newValue)
     {
-        AlcoholTiltShift leftComponent = GameObject.Find("StereoCameraLeft").GetComponent<AlcoholTiltShift>();
-        AlcoholTiltShift rightComponent = GameObject.Find("StereoCameraRight").GetComponent<AlcoholTiltShift>();
+        AlcoholTiltShift leftComponent = GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft).GetComponent<AlcoholTiltShift>();
+        AlcoholTiltShift rightComponent = GameObject.Find(SimulatingSubstancesControls.StereoCameraRight).GetComponent<AlcoholTiltShift>();
         leftComponent.blurArea = newValue;
         rightComponent.blurArea = newValue;
-        SetEffectValueText(newValue, "TunnelLevelText");
+        SetEffectValueText(newValue, SimulatingSubstancesControls.TunnelLevelText);
+#if DEBUG
         Debug.Log(String.Format("Randomization: tunnelValue was {0} and is now {1}", tunnelLevelInitial, newValue));
+#endif
     }
 
     private void SetEffectValueText(float value, String textFieldName)
@@ -109,13 +117,14 @@ public class Randomization : MonoBehaviour {
 
     private float GetRandomWalkDirection(float currentLevel, float rangeLowerBound, float rangeUpperBound)
     {
+        float stepValue = (rangeUpperBound - rangeLowerBound)/6;
         int randomValue = rnd.Next(0, 9999);
         float currentLevelNormalized = (currentLevel - rangeLowerBound)/(rangeUpperBound - rangeLowerBound)*10000;
         
         if (randomValue < currentLevelNormalized - halvedStayRange)
-            return -0.25f;
+            return -stepValue;
         else if (randomValue > currentLevelNormalized + halvedStayRange)
-            return 0.25f;
+            return stepValue;
         else
             return 0;
 
