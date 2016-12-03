@@ -59,21 +59,5 @@ namespace Assets.Scripts.MetaData
             ConfigurationNames.CreateNew,
             ConfigurationNames.DeleteExisting
         };
-
-        //TODO: Extract into ConfigurationFactory/-Provider
-        public static Configuration GetDefaultConfig(string key)
-        {
-            switch (key)
-            {
-                case ConfigurationNames.VeryDrunk:
-                    return VeryDrunk;
-                case ConfigurationNames.Drunk:
-                    return Drunk;
-                case ConfigurationNames.SlightlyDrunk:
-                    return SlightlyDrunk;
-                default:
-                    return Sober;
-            }
-        }
     }
 }

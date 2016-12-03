@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.MetaData;
 using Assets.Scripts.MetaData.UI;
 using UnityEngine;
@@ -37,10 +38,18 @@ public class DeleteConfigViewModel : MonoBehaviour
 		Debug.Log ("ShowSelectedConfig called with index: " + index);
 #endif
 		try {
-			ResetConfig ("");
+			ConfigurationHelper.ResetConfigEffectValues (configuration);
 			ConfigFile selectedConfig = ConfigFilesScrollList [index];
 			if (DefaultConfigurations.List.Contains (selectedConfig.FileName)) {
-				LoadDefaultConfig (selectedConfig.FileName);
+				switch (selectedConfig.FileName) {
+				case ConfigurationNames.CreateNew:
+				case ConfigurationNames.DeleteExisting:
+					ConfigurationHelper.ResetConfigEffectValues (configuration);
+					break;
+				default:
+					configuration = ConfigurationHelper.GetDefaultConfig (selectedConfig.FileName);
+					break;
+				}
 #if DEBUG
 				Debug.Log ("ShowSelectedConfig called with file name: " + selectedConfig.FileName);
 #endif
@@ -57,7 +66,7 @@ public class DeleteConfigViewModel : MonoBehaviour
 	public void Delete ()
 	{
 		try {
-			ResetConfig ("");
+			ConfigurationHelper.ResetConfigEffectValues (configuration);
 			ConfigFile selectedConfig = ConfigFilesScrollList.SelectedConfig;
 			ConfigFilesScrollList.RemoveSelectedConfig ();
 			FileManager.DeleteFile (selectedConfig.FileName);
@@ -74,29 +83,5 @@ public class DeleteConfigViewModel : MonoBehaviour
 	{
 		messageText.text = message + "\n" + ex.Message;
 	}
-	//TODO: Extract into ConfigurationFactory
-	private void ResetConfig (string value)
-	{
-		configuration.Name = value;
-		configuration.BlurLevel = 0;
-		configuration.TunnelLevel = 0;
-		configuration.Delay = 0;
-		configuration.MotionBlur = 0;
-		configuration.RedColor = 0; 
-		configuration.Randomization = 0;
-	}
 
-	//TODO: Possibly extract into HelperClass
-	private void LoadDefaultConfig (string configName)
-	{
-		switch (configName.ToLower ()) {
-		case ConfigurationNames.CreateNew:
-		case ConfigurationNames.DeleteExisting:
-			ResetConfig (configName);
-			break;
-		default:
-			configuration = DefaultConfigurations.GetDefaultConfig (configName);
-			break;
-		}
-	}
 }
