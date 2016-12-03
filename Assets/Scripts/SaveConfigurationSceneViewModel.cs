@@ -1,51 +1,48 @@
 ﻿using System;
 using System.Collections;
+using Assets.Scripts.MetaData;
+using Assets.Scripts.MetaData.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SaveConfigurationSceneViewModel : MonoBehaviour
 {
-	private ConfigurationDTO configuration;
-
 	private Text messagesText;
-
-	public SaveConfigurationSceneViewModel ()
-	{
-		this.configuration = new ConfigurationDTO ();
-	}
 
 	public void SaveConfiguration ()
 	{
-		this.SaveDataToConfigurationDTO ();
-		this.SaveConfigurationDTOToFile ();
+        InputField fileNameInputField = GameObject.Find(ConfigurationControls.FileNameInput).GetComponent<InputField>();
+#if DEBUG
+        Debug.Log("Input field text: " + fileNameInputField.text);
+#endif
+		SaveToFile (GenerateConfiguration(fileNameInputField.text));
+	}
+    //TODO: Extract into ConfigurationFactory
+	private Configuration GenerateConfiguration (string configName) {
+	    return new Configuration
+	    {
+	        Name = configName,
+	        BlurLevel = PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel),
+	        TunnelLevel = PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel),
+	        Delay = PlayerPrefs.GetInt(PlayerPreferences.DelayLevel),
+	        MotionBlur = PlayerPrefs.GetInt(PlayerPreferences.MotionBlur),
+	        RedColor = PlayerPrefs.GetInt(PlayerPreferences.RedColorDistortion),
+	        Randomization = PlayerPrefs.GetInt(PlayerPreferences.Randomization)
+	    };
 	}
 
-	private void SaveDataToConfigurationDTO ()
+	private void SaveToFile (Configuration configuration)
 	{
-		InputField fileNameInputField = GameObject.Find ("FileNameInputField").GetComponent<InputField> ();
-		Debug.Log ("Input field text: " + fileNameInputField.text); 
-		this.configuration.Name = fileNameInputField.text;
-		this.configuration.BlurLevel = PlayerPrefs.GetFloat ("BlurLevel");
-		this.configuration.TunnelLevel = PlayerPrefs.GetFloat ("TunnelLevel");
-		this.configuration.Delay = PlayerPrefs.GetInt ("DelayLevel");
-		this.configuration.MotionBlur = PlayerPrefs.GetInt ("MotionBlur");
-		this.configuration.RedColor = PlayerPrefs.GetInt ("RedColorDistortion");    
-		this.configuration.Randomness = PlayerPrefs.GetInt ("RandomEffects");
-	}
-
-
-	private void SaveConfigurationDTOToFile ()
-	{
-		messagesText = GameObject.Find ("MessagesText").GetComponent<Text> ();
+		messagesText = GameObject.Find (ConfigurationControls.MessagesText).GetComponent<Text> ();
 		try {
-			FileManager.Save (this.configuration);
-			messagesText.text = configuration.Name + " Saved!";
+			FileManager.Save (configuration);
+			messagesText.text = Messages.ConfigSaveSuccessful + configuration.Name;
 		} catch (Exception ex) {
-			this.ShowMessage ("Error at saving: " + configuration.Name, ex);
+			this.ShowMessage (Messages.ConfigSaveError + configuration.Name, ex);
 		}
 	}
 
-
+    //TODO: Possibly extract into HelperClass
 	private void ShowMessage (string message, Exception ex)
 	{
 		messagesText.text = message + "\n" + ex.Message;

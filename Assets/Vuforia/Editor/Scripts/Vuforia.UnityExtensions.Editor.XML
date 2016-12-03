@@ -675,7 +675,7 @@
         </member>
         <member name="M:Vuforia.EditorClasses.CylinderTargetEditor.UpdateGeometry(UnityEngine.GameObject,System.Single,System.Single,System.Single,System.Boolean,System.Boolean)">
             <summary>
-            Updates CylinderTarget. Deletes all parts and recreates them.
+            Updates CylinderTarget. DeleteExistings all parts and recreates them.
             Creates a mesh with vertices, normals, and texture coordinates. 
             Top and bottom geometry are represented as separate submeshes, 
             i.e. resulting mesh contains 1, 2, or 3 submeshes.

@@ -8,7 +8,7 @@ using System.IO;
 public class FileManager
 {
 
-	public static void Save (ConfigurationDTO configuration)
+	public static void Save (Configuration configuration)
 	{
 		BinaryFormatter bf = new BinaryFormatter ();
 		FileStream file = File.Create (Application.persistentDataPath + "/" + configuration.Name);
@@ -16,16 +16,16 @@ public class FileManager
 		file.Close ();
 	}
 
-	public static ConfigurationDTO Load (string fileName)
+	public static Configuration Load (string fileName)
 	{
 		if (File.Exists (Application.persistentDataPath + "/" + fileName)) {
 			BinaryFormatter bf = new BinaryFormatter ();
 			FileStream file = File.Open (Application.persistentDataPath + "/" + fileName, FileMode.Open);
-			ConfigurationDTO configuration = (ConfigurationDTO)bf.Deserialize (file);
+			Configuration configuration = (Configuration)bf.Deserialize (file);
 			file.Close ();
 			return configuration;
 		} else {
-			return new ConfigurationDTO ();
+			return new Configuration ();
 		}
 	}
 

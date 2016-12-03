@@ -8,21 +8,14 @@ using UnityEngine.UI;
 [System.Serializable]
 public class ConfigFile
 {
-	private string fileName;
+    public string FilePath { get; set; }
+    public string FileName { get; set; }
+    public bool IsImmutable { get; set; }
 
-	public string FileName { get { return fileName; } set { fileName = value; } }
-
-	private string filePath { get { return filePath; } set { filePath = value; } }
-
-	public string FilePath;
-	private bool isInmutable;
-
-	public bool IsInmutable { get { return isInmutable; } set { isInmutable = value; } }
-
-	public ConfigFile (string fileName, string filePath, bool isInmutable)
+	public ConfigFile (string fileName, string filePath, bool isImmutable)
 	{
-		this.FileName = fileName;
-		this.FilePath = filePath;
-		this.IsInmutable = isInmutable;
+		FileName = fileName;
+		FilePath = filePath;
+		IsImmutable = isImmutable;
 	}
 }

@@ -267,9 +267,9 @@
             </summary>
             The viewer parameters have to be defined before selecting the viewer.
         </member>
-        <member name="M:Vuforia.Device.DeleteRenderingPrimitives">
+        <member name="M:Vuforia.Device.DeleteExistingRenderingPrimitives">
             <summary>
-            Delete rendering primitives in order to get the latest rendering settings.
+            DeleteExisting rendering primitives in order to get the latest rendering settings.
             </summary>
             This method has to be called when the configuration for the rendering primitives has changed.
             The relevant configuration changes are:
@@ -873,7 +873,7 @@
         </member>
         <member name="M:Vuforia.EyewearCalibrationProfileManager.clearProfile(System.Int32)">
             <summary>
-            Delete all stored data for the specified profile.
+            DeleteExisting all stored data for the specified profile.
             </summary>
             <param name="profileID">A number between 1 and <see cref="M:Vuforia.EyewearCalibrationProfileManager.getMaxCount"/>.</param>
             <returns>Returns true if the profile was successfully cleared, false otherwise.</returns>
@@ -1757,7 +1757,7 @@
         </member>
         <member name="M:Vuforia.EyewearCalibrationProfileManagerImpl.clearProfile(System.Int32)">
             <summary>
-            Delete all stored data for the specified profile.
+            DeleteExisting all stored data for the specified profile.
             </summary>
             <param name="profileID">A number between 1 and <see cref="M:Vuforia.EyewearCalibrationProfileManagerImpl.getMaxCount"/>.</param>
             <returns>Returns true if the profile was successfully cleared, false otherwise.</returns>
@@ -2675,7 +2675,7 @@
         </member>
         <member name="M:Vuforia.ReconstructionImpl.Reset">
             <summary>
-            Delete the created meshes for surfaces and props.
+            DeleteExisting the created meshes for surfaces and props.
             The tracker needs to be stopped before calling this function
             </summary>
         </member>
@@ -2910,7 +2910,7 @@
         </member>
         <member name="M:Vuforia.Reconstruction.Reset">
             <summary>
-            Delete the created meshes for surfaces and props.
+            DeleteExisting the created meshes for surfaces and props.
             The tracker needs to be stopped before calling this function
             </summary>
         </member>
@@ -5182,7 +5182,7 @@
             Called when the geometry of a smart terrain prop has been updated
             </summary>
         </member>
-        <member name="M:Vuforia.ISmartTerrainEventHandler.OnPropDeleted(Vuforia.Prop)">
+        <member name="M:Vuforia.ISmartTerrainEventHandler.OnPropDeleteExistingd(Vuforia.Prop)">
             <summary>
             Called when a smart terrain prop has been destroyed
             </summary>
@@ -5347,12 +5347,12 @@
             Unregisters a previously registered callback
             </summary>
         </member>
-        <member name="M:Vuforia.ReconstructionAbstractBehaviour.RegisterPropDeletedCallback(System.Action{Vuforia.Prop})">
+        <member name="M:Vuforia.ReconstructionAbstractBehaviour.RegisterPropDeleteExistingdCallback(System.Action{Vuforia.Prop})">
             <summary>
             Registers a callback that is called when a Prop has been destroyed
             </summary>
         </member>
-        <member name="M:Vuforia.ReconstructionAbstractBehaviour.UnregisterPropDeletedCallback(System.Action{Vuforia.Prop})">
+        <member name="M:Vuforia.ReconstructionAbstractBehaviour.UnregisterPropDeleteExistingdCallback(System.Action{Vuforia.Prop})">
             <summary>
             Unregisters a previously registered callback
             </summary>
@@ -5378,12 +5378,12 @@
             Unregisters a previously registered callback
             </summary>
         </member>
-        <member name="M:Vuforia.ReconstructionAbstractBehaviour.RegisterSurfaceDeletedCallback(System.Action{Vuforia.Surface})">
+        <member name="M:Vuforia.ReconstructionAbstractBehaviour.RegisterSurfaceDeleteExistingdCallback(System.Action{Vuforia.Surface})">
             <summary>
             Registers a callback that is called when a surface has been deleted
             </summary>
         </member>
-        <member name="M:Vuforia.ReconstructionAbstractBehaviour.UnregisterSurfaceDeletedCallback(System.Action{Vuforia.Surface})">
+        <member name="M:Vuforia.ReconstructionAbstractBehaviour.UnregisterSurfaceDeleteExistingdCallback(System.Action{Vuforia.Surface})">
             <summary>
             Unregisters a previously registered callback
             </summary>
@@ -5466,13 +5466,13 @@
             create a new instance of the input surface behaviour
             </summary>
         </member>
-        <member name="M:Vuforia.ReconstructionAbstractBehaviour.UnregisterDeletedProps(System.Collections.Generic.List{Vuforia.Prop})">
+        <member name="M:Vuforia.ReconstructionAbstractBehaviour.UnregisterDeleteExistingdProps(System.Collections.Generic.List{Vuforia.Prop})">
             <summary>
             Unregisters no longer existing Props in SmartTerrainManager and StateManager (as TrackableBehaviours),
             deletes the game objects
             </summary>
         </member>
-        <member name="M:Vuforia.ReconstructionAbstractBehaviour.UnregisterDeletedSurfaces(System.Collections.Generic.List{Vuforia.Surface})">
+        <member name="M:Vuforia.ReconstructionAbstractBehaviour.UnregisterDeleteExistingdSurfaces(System.Collections.Generic.List{Vuforia.Surface})">
             <summary>
             Unregisters no longer existing Surfaces in SmartTerrainManager and StateManager (as TrackableBehaviours),
             deletes the game objects

@@ -5,68 +5,71 @@ using System;
 using UnityStandardAssets.ImageEffects;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.MetaData;
+using Assets.Scripts.MetaData.UI;
 
 public class ConfigurationViewModel : MonoBehaviour
 {
 	
 	void Start ()
 	{
-		this.SetBlurSize (PlayerPrefs.GetFloat ("BlurLevel"));
-		this.SetTunnelValue (PlayerPrefs.GetFloat ("TunnelLevel"));
-		this.UpdateSliders ();
-		this.UpdateDropdowns ();
+		SetBlurSize (PlayerPrefs.GetFloat (PlayerPreferences.BlurLevel));
+		SetTunnelValue (PlayerPrefs.GetFloat (PlayerPreferences.TunnelLevel));
+		UpdateSliders ();
+		UpdateDropdowns ();
 	}
 
 	public void SetTunnelValue (float newTunnelValue)
 	{
-		PlayerPrefs.SetFloat ("TunnelLevel", newTunnelValue);
-		this.SetEffectValueText (newTunnelValue, "TunnelLevelText");
+		PlayerPrefs.SetFloat (PlayerPreferences.TunnelLevel, newTunnelValue);
+		SetEffectValueText (newTunnelValue, ConfigurationControls.TunnelLevelText);
 	}
 
 
 	public void SetBlurSize (float newBlurValue)
 	{	
-		PlayerPrefs.SetFloat ("BlurLevel", newBlurValue);
-		this.SetEffectValueText (newBlurValue, "BlurLevelText");
+		PlayerPrefs.SetFloat (PlayerPreferences.BlurLevel, newBlurValue);
+		SetEffectValueText (newBlurValue, ConfigurationControls.BlurLevelText);
 	}
 
 	public void SetDelay (int value)
 	{
-		PlayerPrefs.SetInt ("DelayLevel", value);
+		PlayerPrefs.SetInt (PlayerPreferences.DelayLevel, value);
 	}
 
 	public void SetMotionBlur (int value)
 	{
-		PlayerPrefs.SetInt ("MotionBlur", value);
+		PlayerPrefs.SetInt (PlayerPreferences.MotionBlur, value);
 	}
 
 	/// <summary>
-	/// Sets the red color distortion.
+	/// Sets the red color distortion on or off.
 	/// </summary>
-	/// <param name="redColorDistortion">Red color distortion.</param>
+	/// <param name="value">Red color distortion.</param>
 	public void SetRedColorDistortion (int value)
 	{
-		PlayerPrefs.SetInt ("RedColorDistortion", value);
+		PlayerPrefs.SetInt (PlayerPreferences.RedColorDistortion, value);
 	}
 
 	/// <summary>
-	/// Sets the random effects on or off. 
+	/// Sets the effect randomization on or off. 
 	/// </summary>
-	/// <param name="randomEffect">Random effect.</param>
+	/// <param name="value">Randomization value.</param>
 	public void SetRandomEffects (int value)
 	{
-		PlayerPrefs.SetInt ("RandomEffects", value);
+		PlayerPrefs.SetInt (PlayerPreferences.Randomization, value);
 	}
 
 	public void Reset ()
 	{
-		this.ResetPlayerPrefs ();
-		this.ResetSliders ();
-		this.ResetTextFields ();
-		this.ResetDropdowns ();
+		ResetPlayerPrefs ();
+		ResetSliders ();
+		ResetTextFields ();
+		ResetDropdowns ();
 	}
 
-	private void SetEffectValueText (float value, String textFieldName)
+    //TODO: Possibly extract into UI-HelperClass
+    private void SetEffectValueText (float value, String textFieldName)
 	{
 		Text blurValueText = GameObject.Find (textFieldName).GetComponent<Text> ();
 		blurValueText.text = value.ToString ();
@@ -74,11 +77,12 @@ public class ConfigurationViewModel : MonoBehaviour
 
 	private void UpdateSliders ()
 	{
-		UpdateSlider ("BlurSlider", "BlurLevel");
-		UpdateSlider ("TunnelSlider", "TunnelLevel");
+		UpdateSlider (ConfigurationControls.BlurSlider, PlayerPreferences.BlurLevel);
+		UpdateSlider (ConfigurationControls.TunnelSlider, PlayerPreferences.TunnelLevel);
 	}
 
-	private void UpdateSlider (string sliderName, string playerPrefName)
+    //TODO: Possibly extract into UI-HelperClass
+    private void UpdateSlider (string sliderName, string playerPrefName)
 	{
 		Slider slider = GameObject.Find (sliderName).GetComponent<Slider> ();
 		slider.value = PlayerPrefs.GetFloat (playerPrefName);
@@ -86,19 +90,21 @@ public class ConfigurationViewModel : MonoBehaviour
 
 	private void UpdateDropdowns ()
 	{
-		UpdateDropdown ("DelayDropdown", "DelayLevel");
-		UpdateDropdown ("ColorDropdown", "RedColorDistortion");
-		UpdateDropdown ("MotionBlurDropdown", "MotionBlur");
-		UpdateDropdown ("RandomDropdown", "RandomEffects");
+		UpdateDropdown (ConfigurationControls.DelayDropdown, PlayerPreferences.DelayLevel);
+		UpdateDropdown (ConfigurationControls.ColorDropdown, PlayerPreferences.RedColorDistortion);
+		UpdateDropdown (ConfigurationControls.MotionBlurDropdown, PlayerPreferences.MotionBlur);
+		UpdateDropdown (ConfigurationControls.RandomizationDropdown, PlayerPreferences.Randomization);
 	}
 
-	private void UpdateDropdown (string dropdownName, string playerPrefName)
+    //TODO: Possibly extract into UI-HelperClass
+    private void UpdateDropdown (string dropdownName, string playerPrefName)
 	{
 		Dropdown dropdown = GameObject.Find (dropdownName).GetComponent<Dropdown> ();
 		dropdown.value = PlayerPrefs.GetInt (playerPrefName);
 	}
 
-	private void ResetSliders ()
+    //TODO: Possibly extract into UI-HelperClass
+    private void ResetSliders ()
 	{
 		Slider[] configurationSceneSliders = GameObject.FindObjectsOfType<Slider> ();
 		foreach (Slider slider in configurationSceneSliders) {
@@ -106,22 +112,25 @@ public class ConfigurationViewModel : MonoBehaviour
 		}
 	}
 
-	private void ResetTextFields ()
+    //TODO: Possibly extract into UI-HelperClass
+    private void ResetTextFields ()
 	{
-		this.SetEffectValueText (0, "BlurLevelText");
-		this.SetEffectValueText (0, "TunnelLevelText");
+		SetEffectValueText (0, ConfigurationControls.BlurLevelText);
+		SetEffectValueText (0, ConfigurationControls.TunnelLevelText);
 	}
 
+    //TODO: Possibly extract into HelperClass
 	private void ResetPlayerPrefs ()
 	{
-		PlayerPrefs.SetFloat ("BlurLevel", 0);
-		PlayerPrefs.SetFloat ("TunnelLevel", 0);
-		PlayerPrefs.SetInt ("DelayLevel", 0);
-		PlayerPrefs.SetInt ("MotionBlur", 0);
-		PlayerPrefs.SetInt ("RedColorDistortion", 0);    
-		PlayerPrefs.SetInt ("RandomEffects", 0);
+		PlayerPrefs.SetFloat (PlayerPreferences.BlurLevel, 0);
+		PlayerPrefs.SetFloat (PlayerPreferences.TunnelLevel, 0);
+		PlayerPrefs.SetInt (PlayerPreferences.DelayLevel, 0);
+		PlayerPrefs.SetInt (PlayerPreferences.MotionBlur, 0);
+		PlayerPrefs.SetInt (PlayerPreferences.RedColorDistortion, 0);    
+		PlayerPrefs.SetInt (PlayerPreferences.Randomization, 0);
 	}
 
+    //TODO: Possibly extract into UI-HelperClass
 	private void ResetDropdowns ()
 	{
 		Dropdown[] configurationSceneDropdowns = GameObject.FindObjectsOfType<Dropdown> ();
