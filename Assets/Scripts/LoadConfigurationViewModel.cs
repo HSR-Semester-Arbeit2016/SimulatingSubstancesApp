@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.MetaData;
 using Assets.Scripts.MetaData.UI;
 using UnityEngine;
@@ -81,7 +82,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
             case ConfigurationNames.DeleteExisting:
                 break;
             default:
-                configuration = DefaultConfigurations.GetDefaultConfig(configName);
+                configuration = ConfigurationHelper.GetDefaultConfig(configName);
                 break;
 		}
 	}

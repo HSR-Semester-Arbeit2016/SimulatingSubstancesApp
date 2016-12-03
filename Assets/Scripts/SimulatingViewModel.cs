@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.MetaData;
 using Assets.Scripts.MetaData.UI;
 using UnityStandardAssets.ImageEffects;
@@ -29,7 +30,7 @@ public class SimulatingViewModel : MonoBehaviour
 			BlurOptimized cameraRightBlur = GameObject.Find (SimulatingSubstancesControls.StereoCameraRight).GetComponent<BlurOptimized> ();
 			cameraLeftBlur.blurSize = value;
 			cameraRightBlur.blurSize = value;
-			UpdateToggle (SimulatingSubstancesControls.BlurToggle);
+			UiHelper.UpdateToggle (SimulatingSubstancesControls.BlurToggle);
 		}
 	}
 
@@ -42,7 +43,7 @@ public class SimulatingViewModel : MonoBehaviour
 			AlcoholTiltShift cameraRightTunnel = GameObject.Find (SimulatingSubstancesControls.StereoCameraRight).GetComponent<AlcoholTiltShift> ();
 			cameraLeftTunnel.blurArea = value;
 			cameraRightTunnel.blurArea = value;
-			this.UpdateToggle (SimulatingSubstancesControls.TunnelToggle);
+            UiHelper.UpdateToggle (SimulatingSubstancesControls.TunnelToggle);
 		}
 	}
 
@@ -54,7 +55,7 @@ public class SimulatingViewModel : MonoBehaviour
 			Delay delayRight = GameObject.Find (SimulatingSubstancesControls.StereoCameraRight).GetComponent<Delay> ();
 			delayLeft.enabled = true;
 			delayRight.enabled = true;
-			this.UpdateToggle (SimulatingSubstancesControls.DelayToggle);
+            UiHelper.UpdateToggle (SimulatingSubstancesControls.DelayToggle);
 		}
 	}
 
@@ -65,7 +66,7 @@ public class SimulatingViewModel : MonoBehaviour
 			CameraMotionBlur motionBlurRight = GameObject.Find (SimulatingSubstancesControls.StereoCameraRight).GetComponent<CameraMotionBlur> ();
 			motionBlurLeft.enabled = true;
 			motionBlurRight.enabled = true;
-			this.UpdateToggle (SimulatingSubstancesControls.MotionBlurToggle);
+            UiHelper.UpdateToggle (SimulatingSubstancesControls.MotionBlurToggle);
 		}
 	}
 
@@ -76,7 +77,7 @@ public class SimulatingViewModel : MonoBehaviour
 			ColorCorrectionCurves colorCorrectionCurvesRight = GameObject.Find (SimulatingSubstancesControls.StereoCameraRight).GetComponent<ColorCorrectionCurves> ();
 			colorCorrectionCurvesLeft.enabled = true;
 			colorCorrectionCurvesRight.enabled = true;
-			this.UpdateToggle (SimulatingSubstancesControls.RedColorToggle);
+            UiHelper.UpdateToggle (SimulatingSubstancesControls.RedColorToggle);
 		}
 	}
 
@@ -85,14 +86,7 @@ public class SimulatingViewModel : MonoBehaviour
 		if (value > 0) {
 		    Randomization randomization = GameObject.Find(SimulatingSubstancesControls.ARCamera).GetComponent<Randomization>();
 		    randomization.enabled = true;
-            this.UpdateToggle(SimulatingSubstancesControls.RandomizationToggle);
+            UiHelper.UpdateToggle(SimulatingSubstancesControls.RandomizationToggle);
         }
-	}
-
-    //TODO: Possibly extract into UI-Helper
-	private void UpdateToggle (String toggleName)
-	{
-		Toggle toggle = GameObject.Find (toggleName).GetComponent<Toggle> ();
-		toggle.isOn = true;
 	}
 }

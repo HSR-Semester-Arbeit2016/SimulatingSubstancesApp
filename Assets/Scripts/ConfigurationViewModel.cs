@@ -5,6 +5,7 @@ using System;
 using UnityStandardAssets.ImageEffects;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.MetaData;
 using Assets.Scripts.MetaData.UI;
 
@@ -22,14 +23,14 @@ public class ConfigurationViewModel : MonoBehaviour
 	public void SetTunnelValue (float newTunnelValue)
 	{
 		PlayerPrefs.SetFloat (PlayerPreferences.TunnelLevel, newTunnelValue);
-		SetEffectValueText (newTunnelValue, ConfigurationControls.TunnelLevelText);
+		UiHelper.SetEffectValueText (newTunnelValue, ConfigurationControls.TunnelLevelText);
 	}
 
 
 	public void SetBlurSize (float newBlurValue)
 	{	
 		PlayerPrefs.SetFloat (PlayerPreferences.BlurLevel, newBlurValue);
-		SetEffectValueText (newBlurValue, ConfigurationControls.BlurLevelText);
+		UiHelper.SetEffectValueText (newBlurValue, ConfigurationControls.BlurLevelText);
 	}
 
 	public void SetDelay (int value)
@@ -62,80 +63,29 @@ public class ConfigurationViewModel : MonoBehaviour
 
 	public void Reset ()
 	{
-		ResetPlayerPrefs ();
-		ResetSliders ();
+		PlayerPrefHelper.ResetPlayerPrefs ();
+		UiHelper.ResetSliders ();
 		ResetTextFields ();
-		ResetDropdowns ();
-	}
-
-    //TODO: Possibly extract into UI-HelperClass
-    private void SetEffectValueText (float value, String textFieldName)
-	{
-		Text blurValueText = GameObject.Find (textFieldName).GetComponent<Text> ();
-		blurValueText.text = value.ToString ();
+		UiHelper.ResetDropdowns ();
 	}
 
 	private void UpdateSliders ()
 	{
-		UpdateSlider (ConfigurationControls.BlurSlider, PlayerPreferences.BlurLevel);
-		UpdateSlider (ConfigurationControls.TunnelSlider, PlayerPreferences.TunnelLevel);
-	}
-
-    //TODO: Possibly extract into UI-HelperClass
-    private void UpdateSlider (string sliderName, string playerPrefName)
-	{
-		Slider slider = GameObject.Find (sliderName).GetComponent<Slider> ();
-		slider.value = PlayerPrefs.GetFloat (playerPrefName);
+		UiHelper.UpdateSlider (ConfigurationControls.BlurSlider, PlayerPreferences.BlurLevel);
+		UiHelper.UpdateSlider (ConfigurationControls.TunnelSlider, PlayerPreferences.TunnelLevel);
 	}
 
 	private void UpdateDropdowns ()
 	{
-		UpdateDropdown (ConfigurationControls.DelayDropdown, PlayerPreferences.DelayLevel);
-		UpdateDropdown (ConfigurationControls.ColorDropdown, PlayerPreferences.RedColorDistortion);
-		UpdateDropdown (ConfigurationControls.MotionBlurDropdown, PlayerPreferences.MotionBlur);
-		UpdateDropdown (ConfigurationControls.RandomizationDropdown, PlayerPreferences.Randomization);
+		UiHelper.UpdateDropdown (ConfigurationControls.DelayDropdown, PlayerPreferences.DelayLevel);
+        UiHelper.UpdateDropdown (ConfigurationControls.ColorDropdown, PlayerPreferences.RedColorDistortion);
+        UiHelper.UpdateDropdown (ConfigurationControls.MotionBlurDropdown, PlayerPreferences.MotionBlur);
+        UiHelper.UpdateDropdown (ConfigurationControls.RandomizationDropdown, PlayerPreferences.Randomization);
 	}
 
-    //TODO: Possibly extract into UI-HelperClass
-    private void UpdateDropdown (string dropdownName, string playerPrefName)
-	{
-		Dropdown dropdown = GameObject.Find (dropdownName).GetComponent<Dropdown> ();
-		dropdown.value = PlayerPrefs.GetInt (playerPrefName);
-	}
-
-    //TODO: Possibly extract into UI-HelperClass
-    private void ResetSliders ()
-	{
-		Slider[] configurationSceneSliders = GameObject.FindObjectsOfType<Slider> ();
-		foreach (Slider slider in configurationSceneSliders) {
-			slider.value = 0;
-		}
-	}
-
-    //TODO: Possibly extract into UI-HelperClass
     private void ResetTextFields ()
 	{
-		SetEffectValueText (0, ConfigurationControls.BlurLevelText);
-		SetEffectValueText (0, ConfigurationControls.TunnelLevelText);
-	}
-
-    //TODO: Possibly extract into HelperClass
-	private void ResetPlayerPrefs ()
-	{
-		PlayerPrefs.SetFloat (PlayerPreferences.BlurLevel, 0);
-		PlayerPrefs.SetFloat (PlayerPreferences.TunnelLevel, 0);
-		PlayerPrefs.SetInt (PlayerPreferences.DelayLevel, 0);
-		PlayerPrefs.SetInt (PlayerPreferences.MotionBlur, 0);
-		PlayerPrefs.SetInt (PlayerPreferences.RedColorDistortion, 0);    
-		PlayerPrefs.SetInt (PlayerPreferences.Randomization, 0);
-	}
-
-    //TODO: Possibly extract into UI-HelperClass
-	private void ResetDropdowns ()
-	{
-		Dropdown[] configurationSceneDropdowns = GameObject.FindObjectsOfType<Dropdown> ();
-		foreach (Dropdown dropdown in configurationSceneDropdowns) {
-			dropdown.value = 0;
-		}
+		UiHelper.SetEffectValueText(0, ConfigurationControls.BlurLevelText);
+		UiHelper.SetEffectValueText(0, ConfigurationControls.TunnelLevelText);
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.MetaData;
 using Assets.Scripts.MetaData.UI;
 using UnityEngine;
@@ -15,20 +16,7 @@ public class SaveConfigurationSceneViewModel : MonoBehaviour
 #if DEBUG
         Debug.Log("Input field text: " + fileNameInputField.text);
 #endif
-		SaveToFile (GenerateConfiguration(fileNameInputField.text));
-	}
-    //TODO: Extract into ConfigurationFactory
-	private Configuration GenerateConfiguration (string configName) {
-	    return new Configuration
-	    {
-	        Name = configName,
-	        BlurLevel = PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel),
-	        TunnelLevel = PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel),
-	        Delay = PlayerPrefs.GetInt(PlayerPreferences.DelayLevel),
-	        MotionBlur = PlayerPrefs.GetInt(PlayerPreferences.MotionBlur),
-	        RedColor = PlayerPrefs.GetInt(PlayerPreferences.RedColorDistortion),
-	        Randomization = PlayerPrefs.GetInt(PlayerPreferences.Randomization)
-	    };
+		SaveToFile (ConfigurationHelper.GenerateConfigurationByPlayerPrefs(fileNameInputField.text));
 	}
 
 	private void SaveToFile (Configuration configuration)
