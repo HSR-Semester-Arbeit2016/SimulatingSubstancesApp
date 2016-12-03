@@ -14,10 +14,12 @@ public class DeleteConfigViewModel : MonoBehaviour
 {
 
 	public string ApplicationPath { get; set; }
-    public ConfigFilesScrollList ConfigFilesScrollList { get; set; }
-    public Action<int> OnSelectionChanged;
-    private Configuration configuration;
-    private Text messageText;
+
+	public ConfigFilesScrollList ConfigFilesScrollList { get; set; }
+
+	public Action<int> OnSelectionChanged;
+	private Configuration configuration;
+	private Text messageText;
 
 	void Start ()
 	{
@@ -25,28 +27,28 @@ public class DeleteConfigViewModel : MonoBehaviour
 		ConfigFilesScrollList = GameObject.Find (DeleteConfigurationControls.GameController).GetComponent<ConfigFilesScrollList> ();
 		messageText = GameObject.Find (DeleteConfigurationControls.ErrorMessagesText).GetComponent<Text> ();
 		configuration = new Configuration ();
-        ConfigFilesScrollList.OnSelectionChanged = ShowSelectedConfig;
+		ConfigFilesScrollList.OnSelectionChanged = ShowSelectedConfig;
 	}
 
 
 	private void ShowSelectedConfig (int index)
 	{
 #if DEBUG
-        Debug.Log ("ShowSelectedConfig called with index: " + index);
+		Debug.Log ("ShowSelectedConfig called with index: " + index);
 #endif
-        try {
+		try {
 			ResetConfig ("");
-			ConfigFile selectedConfig = ConfigFilesScrollList[index];
+			ConfigFile selectedConfig = ConfigFilesScrollList [index];
 			if (DefaultConfigurations.List.Contains (selectedConfig.FileName)) {
 				LoadDefaultConfig (selectedConfig.FileName);
 #if DEBUG
-                Debug.Log ("ShowSelectedConfig called with file name: " + selectedConfig.FileName);
+				Debug.Log ("ShowSelectedConfig called with file name: " + selectedConfig.FileName);
 #endif
-			    messageText.text = configuration.ToString();
+				messageText.text = configuration.ToString ();
 			} else {
 				configuration = FileManager.Load (selectedConfig.FileName);
-                messageText.text = configuration.ToString();
-            }
+				messageText.text = configuration.ToString ();
+			}
 		} catch (Exception ex) {
 			ShowErrorMessage (Messages.ConfigLoadingError, ex);
 		}
@@ -57,22 +59,22 @@ public class DeleteConfigViewModel : MonoBehaviour
 		try {
 			ResetConfig ("");
 			ConfigFile selectedConfig = ConfigFilesScrollList.SelectedConfig;
-            ConfigFilesScrollList.RemoveSelectedConfig ();
+			ConfigFilesScrollList.RemoveSelectedConfig ();
 			FileManager.DeleteFile (selectedConfig.FileName);
 		} catch (TriedToDeleteDefaultConfigException ex) {
 			ShowErrorMessage (Messages.ConfigDeletingError, ex);
 		} catch (Exception ex) {
-            //TODO: Make sure the custom-exception is actually needed and not just a different MessageText
+			//TODO: Make sure the custom-exception is actually needed and not just a different MessageText
 			ShowErrorMessage (Messages.ConfigDeletingError, ex);
 		}
 	}
 
-    //TODO: Possibly extract into HelperClass
+	//TODO: Possibly extract into HelperClass
 	private void ShowErrorMessage (string message, Exception ex)
 	{
 		messageText.text = message + "\n" + ex.Message;
 	}
-    //TODO: Extract into ConfigurationFactory
+	//TODO: Extract into ConfigurationFactory
 	private void ResetConfig (string value)
 	{
 		configuration.Name = value;
@@ -84,17 +86,17 @@ public class DeleteConfigViewModel : MonoBehaviour
 		configuration.Randomization = 0;
 	}
 
-    //TODO: Possibly extract into HelperClass
+	//TODO: Possibly extract into HelperClass
 	private void LoadDefaultConfig (string configName)
 	{
-		switch (configName.ToLower()) {
+		switch (configName.ToLower ()) {
 		case ConfigurationNames.CreateNew:
 		case ConfigurationNames.DeleteExisting:
 			ResetConfig (configName);
 			break;
 		default:
-			configuration = DefaultConfigurations.GetDefaultConfig(configName);
+			configuration = DefaultConfigurations.GetDefaultConfig (configName);
 			break;
 		}
-    }
+	}
 }
