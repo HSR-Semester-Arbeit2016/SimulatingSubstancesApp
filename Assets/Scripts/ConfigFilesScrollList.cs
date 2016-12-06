@@ -43,7 +43,7 @@ public class ConfigFilesScrollList : MonoBehaviour
 	private void FillListWithDefaultConfigs ()
 	{
 		foreach (var fileName in DefaultConfigurations.List) {
-			ConfigFile newConfigFile = new ConfigFile (fileName, "", true);
+			ConfigFile newConfigFile = new ConfigFile (fileName, "");
 			configFilesList.Add (newConfigFile);
 		}
 	}
@@ -52,7 +52,7 @@ public class ConfigFilesScrollList : MonoBehaviour
 	{
 		string[] fileEntries = Directory.GetFiles (Application.persistentDataPath);
 		foreach (string fileName in fileEntries) {
-			ConfigFile newConfigFile = new ConfigFile (Path.GetFileName (fileName), fileName, false);
+			ConfigFile newConfigFile = new ConfigFile (Path.GetFileName (fileName), fileName);
 			configFilesList.Add (newConfigFile);
 		}
 	}

@@ -2,34 +2,31 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SampleButton : MonoBehaviour {
+public class SampleButton : MonoBehaviour
+{
 
 	public Button buttonComponent;
 	public Text nameLabel;
+	private MainSceneViewModel mainSceneViewModelConfigsList;
+	private ConfigFile configurationFile;
 
-
-	private Item item;
-	private ScrollList scrollList;
-
-	// Use this for initialization
-	void Start () 
+	void Start ()
 	{
 		buttonComponent.onClick.AddListener (OnButtonClick);
 	}
 
-	public void Setup(Item currentItem, ScrollList currentScrollList)
+	public void Setup (ConfigFile currentConfigurationFile, MainSceneViewModel currentScrollList)
 	{
-		item = currentItem;
-		nameLabel.text = item.configurationName;
-		scrollList = currentScrollList;
-
+		configurationFile = currentConfigurationFile;
+		nameLabel.text = configurationFile.FileName;
+		mainSceneViewModelConfigsList = currentScrollList;
 	}
 
-	public void OnButtonClick()
+	public void OnButtonClick ()
 	{
-		scrollList.TryTransferItemToOtherShop (item);
+		mainSceneViewModelConfigsList.LoadSelectedConfiguration (configurationFile);
 		#if DEBUG
-		Debug.Log("Button: " + item.configurationName + "clicked!");
+		Debug.Log ("Button: " + configurationFile.FileName + "clicked!");
 		#endif
 	}
 }
