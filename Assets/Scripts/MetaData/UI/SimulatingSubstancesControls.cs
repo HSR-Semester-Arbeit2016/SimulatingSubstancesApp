@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Assets.Scripts.MetaData.UI
+﻿namespace Assets.Scripts.MetaData.UI
 {
     public static class SimulatingSubstancesControls
     {
@@ -18,6 +13,5 @@ namespace Assets.Scripts.MetaData.UI
         public const string MotionBlurToggle = "MotionBlurToggle";
         public const string RedColorToggle = "RedColorToggle";
         public const string RandomizationToggle = "RandomToggle";
-        
     }
 }

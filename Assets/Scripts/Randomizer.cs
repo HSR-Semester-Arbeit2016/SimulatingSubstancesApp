@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Assets.Scripts
 {
     public class Randomizer
     {
-        private readonly Random random;
         private readonly float halvedStayRange;
+        private readonly Random random;
         private readonly int rangeSplits;
         private float levelRangeLower;
         private float levelRangeUpper;
-        
-        public Randomizer(float initialLevel, float totalMin, float totalMax, float rangeIncrement, float stayRange = 3000, int rangeSplits = 6)
+
+        public Randomizer(float initialLevel, float totalMin, float totalMax, float rangeIncrement,
+            float stayRange = 3000, int rangeSplits = 6)
         {
             random = new Random();
             InitializeValueRanges(initialLevel, totalMin, totalMax, rangeIncrement);
@@ -51,17 +49,15 @@ namespace Assets.Scripts
 
         private float GetRandomWalkDirection(float currentValue, float rangeLowerBound, float rangeUpperBound)
         {
-            float stepValue = (rangeUpperBound - rangeLowerBound) / rangeSplits;
-            int randomValue = random.Next(0, 9999);
-            float currentLevelNormalized = (currentValue - rangeLowerBound) / (rangeUpperBound - rangeLowerBound) * 10000;
+            var stepValue = (rangeUpperBound - rangeLowerBound)/rangeSplits;
+            var randomValue = random.Next(0, 9999);
+            var currentLevelNormalized = (currentValue - rangeLowerBound)/(rangeUpperBound - rangeLowerBound)*10000;
 
             if (randomValue < currentLevelNormalized - halvedStayRange)
                 return -stepValue;
-            else if (randomValue > currentLevelNormalized + halvedStayRange)
+            if (randomValue > currentLevelNormalized + halvedStayRange)
                 return stepValue;
-            else
-                return 0;
-
+            return 0;
         }
     }
 }

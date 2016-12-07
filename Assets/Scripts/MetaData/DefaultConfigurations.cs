@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Assets.Scripts.MetaData
 {
@@ -17,6 +14,7 @@ namespace Assets.Scripts.MetaData
             RedColor = 0,
             Randomization = 0
         };
+
         public static Configuration SlightlyDrunk = new Configuration
         {
             Name = ConfigurationNames.SlightlyDrunk,
@@ -27,6 +25,7 @@ namespace Assets.Scripts.MetaData
             RedColor = 0,
             Randomization = 0
         };
+
         public static Configuration Drunk = new Configuration
         {
             Name = ConfigurationNames.Drunk,
@@ -37,6 +36,7 @@ namespace Assets.Scripts.MetaData
             RedColor = 0,
             Randomization = 0
         };
+
         public static Configuration VeryDrunk = new Configuration
         {
             Name = ConfigurationNames.VeryDrunk,
@@ -47,6 +47,7 @@ namespace Assets.Scripts.MetaData
             RedColor = 0,
             Randomization = 0
         };
+
         public static string CreateNew = ConfigurationNames.CreateNew;
         public static string DeleteExisting = ConfigurationNames.DeleteExisting;
 
