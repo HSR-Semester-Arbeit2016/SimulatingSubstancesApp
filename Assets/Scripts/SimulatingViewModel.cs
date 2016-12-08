@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Helpers;
+﻿using System;
+using System.Collections.Generic;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.MetaData;
 using Assets.Scripts.MetaData.UI;
 using UnityEngine;
@@ -9,29 +11,70 @@ namespace Assets.Scripts
 {
     public class SimulatingViewModel : MonoBehaviour
     {
+        private GameObject arCameraComponent;
+        private GameObject stereoCameraLeftComponent;
+        private GameObject stereoCameraRightComponent;
+
+        private BlurOptimized[] blurComponents;
+        private AlcoholTiltShift[] tunnelVisionComponents;
+        private Delay[] delayComponents;
+        private CameraMotionBlur[] motionBlurComponents;
+        private ColorCorrectionCurves[] colorCorrectionComponents;
+        private Randomization randomizationComponent;
+
+        private Text blurValueText;
+        private Toggle blurToggle;
+        private Text tunnelValueText;
+        private Toggle tunnelToggle;
+        private Toggle delayToggle;
+        private Toggle motionBlurToggle;
+        private Toggle colorDistortionToggle;
+        private Toggle randomizationToggle;
+
+
         private void Start()
         {
+            arCameraComponent = GameObject.Find(SimulatingSubstancesControls.ARCamera);
+            stereoCameraLeftComponent = GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft);
+            stereoCameraRightComponent = GameObject.Find(SimulatingSubstancesControls.StereoCameraRight);
+
+            randomizationComponent = arCameraComponent.GetComponent<Randomization>();
+            blurComponents = new BlurOptimized[2];
+            FillComponents(blurComponents);
+            tunnelVisionComponents = new AlcoholTiltShift[2];
+            FillComponents(tunnelVisionComponents);
+            delayComponents = new Delay[2];
+            FillComponents(delayComponents);
+            motionBlurComponents = new CameraMotionBlur[2];
+            FillComponents(motionBlurComponents);
+            colorCorrectionComponents = new ColorCorrectionCurves[2];
+            FillComponents(colorCorrectionComponents);
+
+            blurValueText = GameObject.Find(SimulatingSubstancesControls.BlurLevelText).GetComponent<Text>();
+            tunnelValueText = GameObject.Find(SimulatingSubstancesControls.TunnelLevelText).GetComponent<Text>();
+            blurToggle = GameObject.Find(SimulatingSubstancesControls.BlurToggle).GetComponent<Toggle>();
+            tunnelToggle = GameObject.Find(SimulatingSubstancesControls.TunnelToggle).GetComponent<Toggle>();
+            delayToggle = GameObject.Find(SimulatingSubstancesControls.DelayToggle).GetComponent<Toggle>();
+            motionBlurToggle = GameObject.Find(SimulatingSubstancesControls.MotionBlurToggle).GetComponent<Toggle>();
+            colorDistortionToggle = GameObject.Find(SimulatingSubstancesControls.RedColorToggle).GetComponent<Toggle>();
+            //randomizationToggle = GameObject.Find(SimulatingSubstancesControls.RandomizationToggle).GetComponent<Toggle>();
+
             UpdateBlurValue(PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel));
             UpdateTunnelValue(PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel));
             UpdateDelay(PlayerPrefs.GetInt(PlayerPreferences.DelayLevel));
             UpdateMotionBlur(PlayerPrefs.GetInt(PlayerPreferences.MotionBlur));
             UpdateRedColorDistortion(PlayerPrefs.GetInt(PlayerPreferences.RedColorDistortion));
-            UpdateRandomEffects(PlayerPrefs.GetInt(PlayerPreferences.Randomization));
+            //UpdateRandomEffects(PlayerPrefs.GetInt(PlayerPreferences.Randomization));
         }
 
         private void UpdateBlurValue(float value)
         {
             if (value > 0)
             {
-                var blurValueText = GameObject.Find(SimulatingSubstancesControls.BlurLevelText).GetComponent<Text>();
                 blurValueText.text = value.ToString();
-                var cameraLeftBlur =
-                    GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft).GetComponent<BlurOptimized>();
-                var cameraRightBlur =
-                    GameObject.Find(SimulatingSubstancesControls.StereoCameraRight).GetComponent<BlurOptimized>();
-                cameraLeftBlur.blurSize = value;
-                cameraRightBlur.blurSize = value;
-                UiHelper.UpdateToggle(SimulatingSubstancesControls.BlurToggle);
+                blurComponents[0].blurSize = value;
+                blurComponents[1].blurSize = value;
+                blurToggle.isOn = true;
             }
         }
 
@@ -39,15 +82,10 @@ namespace Assets.Scripts
         {
             if (value > 0)
             {
-                var tunnelValueText = GameObject.Find(SimulatingSubstancesControls.TunnelLevelText).GetComponent<Text>();
                 tunnelValueText.text = value.ToString();
-                var cameraLeftTunnel =
-                    GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft).GetComponent<AlcoholTiltShift>();
-                var cameraRightTunnel =
-                    GameObject.Find(SimulatingSubstancesControls.StereoCameraRight).GetComponent<AlcoholTiltShift>();
-                cameraLeftTunnel.blurArea = value;
-                cameraRightTunnel.blurArea = value;
-                UiHelper.UpdateToggle(SimulatingSubstancesControls.TunnelToggle);
+                tunnelVisionComponents[0].blurArea = value;
+                tunnelVisionComponents[1].blurArea = value;
+                tunnelToggle.isOn = true;
             }
         }
 
@@ -55,11 +93,9 @@ namespace Assets.Scripts
         {
             if (value > 0)
             {
-                var delayLeft = GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft).GetComponent<Delay>();
-                var delayRight = GameObject.Find(SimulatingSubstancesControls.StereoCameraRight).GetComponent<Delay>();
-                delayLeft.enabled = true;
-                delayRight.enabled = true;
-                UiHelper.UpdateToggle(SimulatingSubstancesControls.DelayToggle);
+                delayComponents[0].enabled = true;
+                delayComponents[1].enabled = true;
+                delayToggle.isOn = true;
             }
         }
 
@@ -67,13 +103,9 @@ namespace Assets.Scripts
         {
             if (value > 0)
             {
-                var motionBlurLeft =
-                    GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft).GetComponent<CameraMotionBlur>();
-                var motionBlurRight =
-                    GameObject.Find(SimulatingSubstancesControls.StereoCameraRight).GetComponent<CameraMotionBlur>();
-                motionBlurLeft.enabled = true;
-                motionBlurRight.enabled = true;
-                UiHelper.UpdateToggle(SimulatingSubstancesControls.MotionBlurToggle);
+                motionBlurComponents[0].enabled = true;
+                motionBlurComponents[1].enabled = true;
+                motionBlurToggle.isOn = true;
             }
         }
 
@@ -81,14 +113,9 @@ namespace Assets.Scripts
         {
             if (value > 0)
             {
-                var colorCorrectionCurvesLeft =
-                    GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft).GetComponent<ColorCorrectionCurves>();
-                var colorCorrectionCurvesRight =
-                    GameObject.Find(SimulatingSubstancesControls.StereoCameraRight)
-                        .GetComponent<ColorCorrectionCurves>();
-                colorCorrectionCurvesLeft.enabled = true;
-                colorCorrectionCurvesRight.enabled = true;
-                UiHelper.UpdateToggle(SimulatingSubstancesControls.RedColorToggle);
+                colorCorrectionComponents[0].enabled = true;
+                colorCorrectionComponents[1].enabled = true;
+                colorDistortionToggle.isOn = true;
             }
         }
 
@@ -96,10 +123,15 @@ namespace Assets.Scripts
         {
             if (value > 0)
             {
-                var randomization = GameObject.Find(SimulatingSubstancesControls.ARCamera).GetComponent<Randomization>();
-                randomization.enabled = true;
-                UiHelper.UpdateToggle(SimulatingSubstancesControls.RandomizationToggle);
+                randomizationComponent.enabled = true;
+                randomizationToggle.isOn = true;
             }
+        }
+
+        private void FillComponents<T>(T[] componentArray)
+        {
+            componentArray[0] = stereoCameraLeftComponent.GetComponent<T>();
+            componentArray[1] = stereoCameraRightComponent.GetComponent<T>();
         }
     }
 }

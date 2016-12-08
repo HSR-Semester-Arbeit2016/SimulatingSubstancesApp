@@ -2,40 +2,66 @@
 using Assets.Scripts.MetaData;
 using Assets.Scripts.MetaData.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
     public class ConfigurationViewModel : MonoBehaviour
     {
+        private Text fileNameInput;
+        private Text messageText;
+        private Text blurLevelText;
+        private Text tunnelLevelText;
+        private Slider blurSlider;
+        private Slider tunnelSlider;
+        private Dropdown delayDropdown;
+        private Dropdown colorDropdown;
+        private Dropdown motionBlurDropdown;
+        private Dropdown randomizationDropdown;
+
         private void Start()
         {
+            fileNameInput = GameObject.Find(ConfigurationControls.FileNameInput).GetComponent<Text>();
+            messageText = GameObject.Find(ConfigurationControls.MessagesText).GetComponent<Text>();
+            blurLevelText = GameObject.Find(ConfigurationControls.BlurLevelText).GetComponent<Text>();
+            tunnelLevelText = GameObject.Find(ConfigurationControls.TunnelLevelText).GetComponent<Text>();
+
+            blurSlider = GameObject.Find(ConfigurationControls.BlurSlider).GetComponent<Slider>();
+            tunnelSlider = GameObject.Find(ConfigurationControls.TunnelSlider).GetComponent<Slider>();
+
+            delayDropdown = GameObject.Find(ConfigurationControls.DelayDropdown).GetComponent<Dropdown>();
+            colorDropdown = GameObject.Find(ConfigurationControls.ColorDropdown).GetComponent<Dropdown>();
+            motionBlurDropdown = GameObject.Find(ConfigurationControls.MotionBlurDropdown).GetComponent<Dropdown>();
+            randomizationDropdown = GameObject.Find(ConfigurationControls.RandomizationDropdown).GetComponent<Dropdown>();
+
             SetBlurSize(PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel));
             SetTunnelValue(PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel));
-            UpdateSliders();
-            UpdateDropdowns();
         }
 
         public void SetTunnelValue(float newTunnelValue)
         {
             PlayerPrefs.SetFloat(PlayerPreferences.TunnelLevel, newTunnelValue);
-            UiHelper.SetEffectValueText(newTunnelValue, ConfigurationControls.TunnelLevelText);
+            tunnelLevelText.text = newTunnelValue.ToString();
         }
 
 
         public void SetBlurSize(float newBlurValue)
         {
             PlayerPrefs.SetFloat(PlayerPreferences.BlurLevel, newBlurValue);
-            UiHelper.SetEffectValueText(newBlurValue, ConfigurationControls.BlurLevelText);
+            blurLevelText.text = newBlurValue.ToString();
         }
 
         public void SetDelay(int value)
         {
             PlayerPrefs.SetInt(PlayerPreferences.DelayLevel, value);
+            delayDropdown.value = value;
         }
 
         public void SetMotionBlur(int value)
         {
             PlayerPrefs.SetInt(PlayerPreferences.MotionBlur, value);
+            motionBlurDropdown.value = value;
         }
 
         /// <summary>
@@ -45,6 +71,7 @@ namespace Assets.Scripts
         public void SetRedColorDistortion(int value)
         {
             PlayerPrefs.SetInt(PlayerPreferences.RedColorDistortion, value);
+            colorDropdown.value = value;
         }
 
         /// <summary>
@@ -54,34 +81,35 @@ namespace Assets.Scripts
         public void SetRandomEffects(int value)
         {
             PlayerPrefs.SetInt(PlayerPreferences.Randomization, value);
+            randomizationDropdown.value = value;
         }
 
         public void Reset()
         {
             PlayerPrefHelper.ResetPlayerPrefs();
-            UiHelper.ResetSliders();
             ResetTextFields();
-            UiHelper.ResetDropdowns();
-        }
-
-        private void UpdateSliders()
-        {
-            UiHelper.UpdateSlider(ConfigurationControls.BlurSlider, PlayerPreferences.BlurLevel);
-            UiHelper.UpdateSlider(ConfigurationControls.TunnelSlider, PlayerPreferences.TunnelLevel);
-        }
-
-        private void UpdateDropdowns()
-        {
-            UiHelper.UpdateDropdown(ConfigurationControls.DelayDropdown, PlayerPreferences.DelayLevel);
-            UiHelper.UpdateDropdown(ConfigurationControls.ColorDropdown, PlayerPreferences.RedColorDistortion);
-            UiHelper.UpdateDropdown(ConfigurationControls.MotionBlurDropdown, PlayerPreferences.MotionBlur);
-            UiHelper.UpdateDropdown(ConfigurationControls.RandomizationDropdown, PlayerPreferences.Randomization);
+            ResetDropDowns();
+            ResetSliderValues();
         }
 
         private void ResetTextFields()
         {
-            UiHelper.SetEffectValueText(0, ConfigurationControls.BlurLevelText);
-            UiHelper.SetEffectValueText(0, ConfigurationControls.TunnelLevelText);
+            blurLevelText.text = blurSlider.minValue.ToString();
+            tunnelLevelText.text = tunnelSlider.minValue.ToString();
+        }
+
+        private void ResetSliderValues()
+        {
+            blurSlider.value = blurSlider.minValue;
+            tunnelSlider.value = tunnelSlider.minValue;
+        }
+
+        private void ResetDropDowns()
+        {
+            delayDropdown.value = 0;
+            colorDropdown.value = 0;
+            motionBlurDropdown.value = 0;
+            randomizationDropdown.value = 0;
         }
     }
 }
