@@ -43,6 +43,16 @@ namespace Assets.Scripts
         /// <value>The randomness.</value>
         public int Randomization { get; set; }
 
+        public Configuration()
+        {
+            BlurLevel = 0f;
+            TunnelLevel = 0f;
+            Delay = 0;
+            MotionBlur = 0;
+            RedColor = 0;
+            Randomization = 0;
+        }
+
         public override string ToString()
         {
             return "Configuration Properties:\n" +

@@ -93,8 +93,8 @@ namespace Assets.Scripts
         {
             if (value > 0)
             {
-                delayComponents[0].enabled = true;
-                delayComponents[1].enabled = true;
+                delayComponents[0].IsEnabled = true;
+                delayComponents[1].IsEnabled = true;
                 delayToggle.isOn = true;
             }
         }

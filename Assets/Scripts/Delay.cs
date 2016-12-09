@@ -8,6 +8,8 @@ namespace Assets.Scripts
         private readonly int delayQueueCount = 15;
         private readonly Queue<RenderTexture> renderTextureQueue;
 
+        public bool IsEnabled { get; set; }
+
         public Delay()
         {
             renderTextureQueue = new Queue<RenderTexture>();
@@ -15,7 +17,7 @@ namespace Assets.Scripts
 
         private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
-            if (enabled)
+            if (IsEnabled)
             {
                 SetDelay(src, dest);
             }
