@@ -57,14 +57,14 @@ namespace Assets.Scripts
             delayToggle = GameObject.Find(SimulatingSubstancesControls.DelayToggle).GetComponent<Toggle>();
             motionBlurToggle = GameObject.Find(SimulatingSubstancesControls.MotionBlurToggle).GetComponent<Toggle>();
             colorDistortionToggle = GameObject.Find(SimulatingSubstancesControls.RedColorToggle).GetComponent<Toggle>();
-            //randomizationToggle = GameObject.Find(SimulatingSubstancesControls.RandomizationToggle).GetComponent<Toggle>();
+            randomizationToggle = GameObject.Find(SimulatingSubstancesControls.RandomizationToggle).GetComponent<Toggle>();
 
             UpdateBlurValue(PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel));
             UpdateTunnelValue(PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel));
             UpdateDelay(PlayerPrefs.GetInt(PlayerPreferences.DelayLevel));
             UpdateMotionBlur(PlayerPrefs.GetInt(PlayerPreferences.MotionBlur));
             UpdateRedColorDistortion(PlayerPrefs.GetInt(PlayerPreferences.RedColorDistortion));
-            //UpdateRandomEffects(PlayerPrefs.GetInt(PlayerPreferences.Randomization));
+            UpdateRandomEffects(PlayerPrefs.GetInt(PlayerPreferences.Randomization));
         }
 
         private void UpdateBlurValue(float value)

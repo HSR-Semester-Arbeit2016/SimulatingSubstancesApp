@@ -1,31 +1,38 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
-    public class SampleButton : MonoBehaviour
-    {
-        public Button buttonComponent;
-        private ConfigFile configurationFile;
-        private MainSceneViewModel mainSceneViewModelConfigsList;
-        public Text nameLabel;
+	public class SampleButton : MonoBehaviour
+	{
+		public Button buttonComponent;
+		private ConfigFile configurationFile;
+		private MainSceneViewModel mainSceneViewModelConfigsList;
+		public Text nameLabel;
 
-        private void Start()
-        {
-            buttonComponent.onClick.AddListener(OnButtonClick);
-        }
+		private void Start ()
+		{
+			buttonComponent.onClick.AddListener (OnButtonClick);
+		}
 
-        public void Setup(ConfigFile currentConfigurationFile, MainSceneViewModel currentScrollList)
-        {
-            configurationFile = currentConfigurationFile;
-            nameLabel.text = configurationFile.FileName;
-            mainSceneViewModelConfigsList = currentScrollList;
-        }
+		public void Setup (ConfigFile currentConfigurationFile, MainSceneViewModel currentMainSceneViewModelScrollList)
+		{
+			configurationFile = currentConfigurationFile;
+			nameLabel.text = configurationFile.FileName;
+			mainSceneViewModelConfigsList = currentMainSceneViewModelScrollList;
+		}
 
-        public void OnButtonClick()
-        {
-            mainSceneViewModelConfigsList.LoadSelectedConfiguration(configurationFile);
-            Debug.Log("Button: " + configurationFile.FileName + "clicked!");
-        }
-    }
+		public void OnButtonClick ()
+		{
+			try {
+				mainSceneViewModelConfigsList.LoadSelectedConfiguration (configurationFile);
+				#if DEBUG
+				Debug.Log ("Button: " + configurationFile.FileName + "clicked!");
+				#endif
+			} catch (Exception ex) {
+				
+			}
+		}
+	}
 }

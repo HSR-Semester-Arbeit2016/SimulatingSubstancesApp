@@ -14,7 +14,6 @@ namespace Assets.Scripts
         private List<ConfigFile> configsList;
         private Configuration configuration;
         public Transform contentPanel;
-        private int count;
 
         private void Start()
         {
@@ -72,12 +71,6 @@ namespace Assets.Scripts
 
         public void LoadSelectedConfiguration(ConfigFile configurationFile)
         {
-            //TODO use this to navigate to scene or to load configuration
-
-            //	RemoveItem (item, this);
-            //RefreshDisplay ();
-            Debug.Log("TryTransferItemToOtherShop called with item: " + configurationFile.FileName + " count: " + count);
-            count++;
             LoadConfigurationFromConfig(configurationFile);
             SaveDataToPlayerPrefs(configuration);
             LoadCorrespondingScene(configurationFile.FileName);
@@ -87,8 +80,9 @@ namespace Assets.Scripts
         private void LoadConfigurationFromConfig(ConfigFile selectedConfig)
         {
             try
-            {
+			{ 	#if DEBUG
                 Debug.Log("Selected Config Name: " + selectedConfig.FileName);
+				#endif
                 if (DefaultConfigurations.List.Contains(selectedConfig.FileName))
                 {
                     LoadDefaultConfig(selectedConfig.FileName);
@@ -100,13 +94,14 @@ namespace Assets.Scripts
             }
             catch (Exception ex)
             {
-                Debug.Log("Error at loading configuration");
+				#if DEBUG
+				Debug.Log("Error at loading configuration"+ ex.Message);
+				#endif
             }
         }
 
         private void SaveDataToPlayerPrefs(Configuration selectedConfig)
-        {
-            Debug.Log("SaveDataToPlayerPrefs in LoadConfigurationViewModelCalled");
+        {  
             PlayerPrefs.SetString(PlayerPreferences.ConfigurationName, configuration.Name);
             PlayerPrefs.SetFloat(PlayerPreferences.BlurLevel, configuration.BlurLevel);
             PlayerPrefs.SetFloat(PlayerPreferences.TunnelLevel, configuration.TunnelLevel);
