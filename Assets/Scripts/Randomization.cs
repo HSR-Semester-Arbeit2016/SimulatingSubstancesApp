@@ -1,123 +1,78 @@
 ﻿using System;
+using Assets.Scripts;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
-using Random = System.Random;
 
-public class Randomization : MonoBehaviour {
+public class Randomization : MonoBehaviour
+{
+    private static readonly int predefinedInterval = 10;
+    private static readonly float blurValueMax = 10;
+    private static readonly float tunnelValueMax = 15;
 
-    
-    private static int predefinedInterval = 10;
-    private static float halvedStayRange = 1500;
-    private static float blurValueMax = 10;
-    private static float tunnelValueMax = 15;
-    private float blurLevelInitial;
+    private BlurOptimized[] blurComponents;
     private float blurLevelCurrent;
-    private float blurRangeUpper;
-    private float blurRangeLower;
-    private float tunnelLevelInitial;
-    private float tunnelLevelCurrent;
-    private float tunnelRangeUpper;
-    private float tunnelRangeLower;
-    private Random rnd;
+    private Randomizer blurRandomizer;
+    private Text blurValueText;
     private long internalTime;
+    private float tunnelLevelCurrent;
+    private Randomizer tunnelRandomizer;
 
-    // Use this for initialization
-    void Start ()
-	{
-        rnd = new Random();
+    private Text tunnelValueText;
+    private AlcoholTiltShift[] tunnelVisionComponents;
+
+    private void Start()
+    {
         internalTime = DateTime.Now.Ticks;
-        blurLevelInitial = PlayerPrefs.GetFloat("BlurLevel");
-	    blurLevelCurrent = blurLevelInitial;
-        blurRangeUpper = GetUpperRangeValue(blurLevelInitial, 1, blurValueMax);
-	    blurRangeLower = GetLowerRangeValue(blurLevelInitial, 1, 0);
+        blurRandomizer = new Randomizer(PlayerPrefs.GetFloat("BlurLevel"), 0, blurValueMax, 1, 3000, 8);
+        tunnelRandomizer = new Randomizer(PlayerPrefs.GetFloat("TunnelLevel"), 0, tunnelValueMax, 1.5f);
 
-	    tunnelLevelInitial = PlayerPrefs.GetFloat("TunnelLevel");
-	    tunnelLevelCurrent = tunnelLevelInitial;
-	    tunnelRangeUpper = GetUpperRangeValue(tunnelLevelInitial, 1.5f, tunnelValueMax);
-	    tunnelRangeLower = GetLowerRangeValue(tunnelLevelInitial, 1.5f, 0);
+        blurComponents = new BlurOptimized[2];
+        FillComponents(blurComponents);
+        tunnelVisionComponents = new AlcoholTiltShift[2];
+        FillComponents(tunnelVisionComponents);
 
+        tunnelValueText = GameObject.Find("TunnelLevelText").GetComponent<Text>();
+        blurValueText = GameObject.Find("BlurLevelText").GetComponent<Text>();
+
+#if DEBUG
         Debug.Log("Randomization initialized!");
+#endif
     }
-	
-	// Update is called once per frame
-	void Update ()
-	{
+
+    private void Update()
+    {
         var timeSpanElapsed = new TimeSpan(DateTime.Now.Ticks - internalTime);
         var hasTimeElapsed = timeSpanElapsed.TotalSeconds >= predefinedInterval;
 
         if (enabled && hasTimeElapsed)
         {
-            blurLevelCurrent = DoRandomWalk(blurLevelCurrent, blurRangeLower, blurRangeUpper);
+            blurLevelCurrent = blurRandomizer.DoRandomWalk(blurLevelCurrent);
             UpdateBlurValue(blurLevelCurrent);
-            tunnelLevelCurrent = DoRandomWalk(tunnelLevelCurrent, tunnelRangeLower, tunnelRangeUpper);
+            tunnelLevelCurrent = tunnelRandomizer.DoRandomWalk(tunnelLevelCurrent);
             UpdateTunnelValue(tunnelLevelCurrent);
 
             internalTime = DateTime.Now.Ticks;
         }
     }
 
-    private float GetUpperRangeValue(float currentValue, float increment, float maxValue)
-    {
-        var upperRange = currentValue + increment;
-        if (blurRangeUpper > maxValue)
-            upperRange = maxValue;
-        return upperRange;
-    }
-
-    private float GetLowerRangeValue(float currentValue, float decrement, float minValue)
-    {
-        var lowerRange = currentValue - decrement;
-        if (blurRangeUpper < minValue)
-            lowerRange = minValue;
-        return lowerRange;
-    }
-
-    private float DoRandomWalk(float currentLevel, float rangeLower, float rangeUpper)
-    {
-        currentLevel += GetRandomWalkDirection(currentLevel, rangeLower, rangeUpper);
-        return currentLevel;
-    }
-
     private void UpdateBlurValue(float newValue)
     {
-        BlurOptimized leftComponent = GameObject.Find("StereoCameraLeft").GetComponent<BlurOptimized>();
-        BlurOptimized rightComponent = GameObject.Find("StereoCameraRight").GetComponent<BlurOptimized>();
-        leftComponent.blurSize = newValue;
-        rightComponent.blurSize = newValue;
-        SetEffectValueText(newValue, "BlurLevelText");
-        Debug.Log(String.Format("Randomization: BlurValue was {0} and is now {1}", blurLevelInitial, newValue));
+        blurComponents[0].blurSize = newValue;
+        blurComponents[1].blurSize = newValue;
+        blurValueText.text = newValue.ToString();
     }
 
     private void UpdateTunnelValue(float newValue)
     {
-        AlcoholTiltShift leftComponent = GameObject.Find("StereoCameraLeft").GetComponent<AlcoholTiltShift>();
-        AlcoholTiltShift rightComponent = GameObject.Find("StereoCameraRight").GetComponent<AlcoholTiltShift>();
-        leftComponent.blurArea = newValue;
-        rightComponent.blurArea = newValue;
-        SetEffectValueText(newValue, "TunnelLevelText");
-        Debug.Log(String.Format("Randomization: tunnelValue was {0} and is now {1}", tunnelLevelInitial, newValue));
+        tunnelVisionComponents[0].blurArea = newValue;
+        tunnelVisionComponents[1].blurArea = newValue;
+        tunnelValueText.text = newValue.ToString();
     }
 
-    private void SetEffectValueText(float value, String textFieldName)
+    private void FillComponents<T>(T[] componentArray)
     {
-        Text textComponent = GameObject.Find(textFieldName).GetComponent<Text>();
-        textComponent.text = value.ToString();
-    }
-
-    private float GetRandomWalkDirection(float currentLevel, float rangeLowerBound, float rangeUpperBound)
-    {
-        int randomValue = rnd.Next(0, 9999);
-        float currentLevelNormalized = (currentLevel - rangeLowerBound)/(rangeUpperBound - rangeLowerBound)*10000;
-        
-        if (randomValue < currentLevelNormalized - halvedStayRange)
-            return -0.25f;
-        else if (randomValue > currentLevelNormalized + halvedStayRange)
-            return 0.25f;
-        else
-            return 0;
-
+        componentArray[0] = GameObject.Find("StereoCameraLeft").GetComponent<T>();
+        componentArray[1] = GameObject.Find("StereoCameraRight").GetComponent<T>();
     }
 }
