@@ -5,7 +5,7 @@ namespace Assets.Scripts
 {
     public class Delay : MonoBehaviour
     {
-        private readonly int delayQueueCount = 15;
+        private const int delayQueueCount = 15;
         private readonly Queue<RenderTexture> renderTextureQueue;
 
         public bool IsEnabled { get; set; }

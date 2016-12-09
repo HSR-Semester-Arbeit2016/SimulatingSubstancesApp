@@ -9,8 +9,6 @@ namespace Assets.Scripts
 {
     public class ConfigurationViewModel : MonoBehaviour
     {
-        private Text fileNameInput;
-        private Text messageText;
         private Text blurLevelText;
         private Text tunnelLevelText;
         private Slider blurSlider;
@@ -22,8 +20,6 @@ namespace Assets.Scripts
 
         private void Start()
         {
-            fileNameInput = GameObject.Find(ConfigurationControls.FileNameInput).GetComponent<Text>();
-            messageText = GameObject.Find(ConfigurationControls.MessagesText).GetComponent<Text>();
             blurLevelText = GameObject.Find(ConfigurationControls.BlurLevelText).GetComponent<Text>();
             tunnelLevelText = GameObject.Find(ConfigurationControls.TunnelLevelText).GetComponent<Text>();
 

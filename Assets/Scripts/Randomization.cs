@@ -1,5 +1,6 @@
 ﻿using System;
 using Assets.Scripts.Helpers;
+using Assets.Scripts.MetaData;
 using Assets.Scripts.MetaData.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,10 +19,6 @@ namespace Assets.Scripts
         private float tunnelLevelCurrent;
         private Randomizer tunnelRandomizer;
 
-        private GameObject arCameraComponent;
-        private GameObject stereoCameraLeftComponent;
-        private GameObject stereoCameraRightComponent;
-
         private BlurOptimized[] blurComponents;
         private AlcoholTiltShift[] tunnelVisionComponents;
 
@@ -31,12 +28,8 @@ namespace Assets.Scripts
         private void Start()
         {
             internalTime = DateTime.Now.Ticks;
-            blurRandomizer = new Randomizer(PlayerPrefs.GetFloat("BlurLevel"), 0, blurValueMax, 1, 3000, 8);
-            tunnelRandomizer = new Randomizer(PlayerPrefs.GetFloat("TunnelLevel"), 0, tunnelValueMax, 1.5f);
-
-            arCameraComponent = GameObject.Find(SimulatingSubstancesControls.ARCamera);
-            stereoCameraLeftComponent = GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft);
-            stereoCameraRightComponent = GameObject.Find(SimulatingSubstancesControls.StereoCameraRight);
+            blurRandomizer = new Randomizer(PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel), 0, blurValueMax, 1, 3000, 8);
+            tunnelRandomizer = new Randomizer(PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel), 0, tunnelValueMax, 1.5f);
 
             blurComponents = new BlurOptimized[2];
             FillComponents(blurComponents);
@@ -79,8 +72,8 @@ namespace Assets.Scripts
 
         private void FillComponents<T>(T[] componentArray)
         {
-            componentArray[0] = stereoCameraLeftComponent.GetComponent<T>();
-            componentArray[1] = stereoCameraRightComponent.GetComponent<T>();
+            componentArray[0] = GameObject.Find(SimulatingSubstancesControls.StereoCameraLeft).GetComponent<T>();
+            componentArray[1] = GameObject.Find(SimulatingSubstancesControls.StereoCameraRight).GetComponent<T>();
         }
     }
 }
