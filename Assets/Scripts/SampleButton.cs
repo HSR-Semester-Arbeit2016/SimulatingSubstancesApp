@@ -13,6 +13,7 @@ namespace Assets.Scripts
 
 		private void Start ()
 		{
+			// TODO look fr dlete scene GameObject.Find("").scene
 			buttonComponent.onClick.AddListener (OnButtonClick);
 		}
 
@@ -30,7 +31,7 @@ namespace Assets.Scripts
 #if DEBUG
 				Debug.Log ("Button: " + configurationFile.FileName + "clicked!");
 #endif
-			} catch (Exception ex) {
+			} catch (Exception) {
 				
 			}
 		}
