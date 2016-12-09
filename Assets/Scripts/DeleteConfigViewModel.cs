@@ -31,8 +31,10 @@ namespace Assets.Scripts
 
 		private void ShowSelectedConfig (int index)
 		{
-			Debug.Log ("ShowSelectedConfig called with index: " + index);
-			try {
+#if DEBUG
+            Debug.Log ("ShowSelectedConfig called with index: " + index);
+#endif
+            try {
 				ConfigurationHelper.ResetConfigEffectValues (configuration);
 				var selectedConfig = ConfigFilesScrollList [index];
 				if (DefaultConfigurations.List.Contains (selectedConfig.FileName)) {
@@ -45,8 +47,10 @@ namespace Assets.Scripts
 						configuration = ConfigurationHelper.GetDefaultConfig (selectedConfig.FileName);
 						break;
 					}
-					Debug.Log ("ShowSelectedConfig called with file name: " + selectedConfig.FileName);
-					messageText.text = configuration.ToString ();
+#if DEBUG
+                    Debug.Log ("ShowSelectedConfig called with file name: " + selectedConfig.FileName);
+#endif
+                    messageText.text = configuration.ToString ();
 				} else {
 					configuration = FileManager.Load (selectedConfig.FileName);
 					messageText.text = configuration.ToString ();

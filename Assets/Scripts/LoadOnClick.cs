@@ -8,7 +8,9 @@ namespace Assets.Scripts
         public void LoadScene(int sceneIndex)
         {
             SceneManager.LoadScene(sceneIndex);
+#if DEBUG
             Debug.Log("LoadOnClick: Go to scene ->" + sceneIndex);
+#endif
         }
     }
 }

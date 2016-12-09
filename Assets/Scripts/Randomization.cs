@@ -29,8 +29,10 @@ namespace Assets.Scripts
         private void Start()
         {
             internalTime = DateTime.Now.Ticks;
-            blurRandomizer = new Randomizer(PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel), valueMin, blurValueMax, 1, 3000, 8);
-            tunnelRandomizer = new Randomizer(PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel), valueMin, tunnelValueMax, 1.5f);
+            blurLevelCurrent = PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel);
+            blurRandomizer = new Randomizer(blurLevelCurrent, valueMin, blurValueMax, 1, 3000, 8);
+            tunnelLevelCurrent = PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel);
+            tunnelRandomizer = new Randomizer(tunnelLevelCurrent, valueMin, tunnelValueMax, 1.5f);
 
             blurComponents = new BlurOptimized[2];
             FillComponents(blurComponents);

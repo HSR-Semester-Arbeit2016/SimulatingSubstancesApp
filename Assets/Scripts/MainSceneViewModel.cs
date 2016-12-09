@@ -80,7 +80,8 @@ namespace Assets.Scripts
         private void LoadConfigurationFromConfig(ConfigFile selectedConfig)
         {
             try
-			{ 	#if DEBUG
+			{ 	
+                #if DEBUG
                 Debug.Log("Selected Config Name: " + selectedConfig.FileName);
 				#endif
                 if (DefaultConfigurations.List.Contains(selectedConfig.FileName))

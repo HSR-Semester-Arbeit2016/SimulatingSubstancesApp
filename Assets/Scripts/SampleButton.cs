@@ -27,9 +27,9 @@ namespace Assets.Scripts
 		{
 			try {
 				mainSceneViewModelConfigsList.LoadSelectedConfiguration (configurationFile);
-				#if DEBUG
+#if DEBUG
 				Debug.Log ("Button: " + configurationFile.FileName + "clicked!");
-				#endif
+#endif
 			} catch (Exception ex) {
 				
 			}
