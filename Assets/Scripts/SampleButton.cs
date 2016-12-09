@@ -1,32 +1,39 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SampleButton : MonoBehaviour
+namespace Assets.Scripts
 {
-
-	public Button buttonComponent;
-	public Text nameLabel;
-	private MainSceneViewModel mainSceneViewModelConfigsList;
-	private ConfigFile configurationFile;
-
-	void Start ()
+	public class SampleButton : MonoBehaviour
 	{
-		buttonComponent.onClick.AddListener (OnButtonClick);
-	}
+		public Button buttonComponent;
+		private ConfigFile configurationFile;
+		private MainSceneViewModel mainSceneViewModelConfigsList;
+		public Text nameLabel;
 
-	public void Setup (ConfigFile currentConfigurationFile, MainSceneViewModel currentScrollList)
-	{
-		configurationFile = currentConfigurationFile;
-		nameLabel.text = configurationFile.FileName;
-		mainSceneViewModelConfigsList = currentScrollList;
-	}
+		private void Start ()
+		{
+			// TODO look fr dlete scene GameObject.Find("").scene
+			buttonComponent.onClick.AddListener (OnButtonClick);
+		}
 
-	public void OnButtonClick ()
-	{
-		mainSceneViewModelConfigsList.LoadSelectedConfiguration (configurationFile);
-		#if DEBUG
-		Debug.Log ("Button: " + configurationFile.FileName + "clicked!");
-		#endif
+		public void Setup (ConfigFile currentConfigurationFile, MainSceneViewModel currentMainSceneViewModelScrollList)
+		{
+			configurationFile = currentConfigurationFile;
+			nameLabel.text = configurationFile.FileName;
+			mainSceneViewModelConfigsList = currentMainSceneViewModelScrollList;
+		}
+
+		public void OnButtonClick ()
+		{
+			try {
+				mainSceneViewModelConfigsList.LoadSelectedConfiguration (configurationFile);
+#if DEBUG
+				Debug.Log ("Button: " + configurationFile.FileName + "clicked!");
+#endif
+			} catch (Exception) {
+				
+			}
+		}
 	}
 }

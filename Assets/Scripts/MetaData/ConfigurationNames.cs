@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Assets.Scripts.MetaData
+﻿namespace Assets.Scripts.MetaData
 {
     public static class ConfigurationNames
     {
