@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class SaveConfigurationSceneViewModel : MonoBehaviour
 {
-	private ConfigurationDTO configuration;
+	private Configuration configuration;
 
 	private Text messagesText;
 
 	public SaveConfigurationSceneViewModel ()
 	{
-		this.configuration = new ConfigurationDTO ();
+		this.configuration = new Configuration ();
 	}
 
 	public void SaveConfiguration ()
@@ -30,7 +30,7 @@ public class SaveConfigurationSceneViewModel : MonoBehaviour
 		this.configuration.Delay = PlayerPrefs.GetInt ("DelayLevel");
 		this.configuration.MotionBlur = PlayerPrefs.GetInt ("MotionBlur");
 		this.configuration.RedColor = PlayerPrefs.GetInt ("RedColorDistortion");    
-		this.configuration.Randomness = PlayerPrefs.GetInt ("RandomEffects");
+		this.configuration.Randomization = PlayerPrefs.GetInt ("RandomEffects");
 	}
 
 

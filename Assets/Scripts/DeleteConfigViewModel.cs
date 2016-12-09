@@ -15,7 +15,7 @@ public class DeleteConfigViewModel : MonoBehaviour
 
 	private string ApplicationPath { get { return applicationPath; } set { applicationPath = value; } }
 
-	private ConfigurationDTO configuration;
+	private Configuration configuration;
 
 	private ConfigFilesScrollList configFilesList;
 
@@ -43,7 +43,7 @@ public class DeleteConfigViewModel : MonoBehaviour
 		ApplicationPath = Application.persistentDataPath;
 		ConfigFilesList = GameObject.Find ("GameController").GetComponent<ConfigFilesScrollList> ();
 		messagesText = GameObject.Find ("MessagesText").GetComponent<Text> ();
-		configuration = new ConfigurationDTO ();
+		configuration = new Configuration ();
 		ConfigFilesList.OnSelectionChanged = ShowSelectedConfig;
 	}
 
@@ -94,7 +94,7 @@ public class DeleteConfigViewModel : MonoBehaviour
 		this.configuration.Delay = 0;
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0; 
-		this.configuration.Randomness = 0;
+		this.configuration.Randomization = 0;
 	}
 
 	private void ShowConfigFromDTo ()
@@ -106,7 +106,7 @@ public class DeleteConfigViewModel : MonoBehaviour
 		messagesText.text += "\nDelay Level: " + (this.configuration.Delay == 0 ? "Off" : "On");  
 		messagesText.text += "\nMotion Blur: " + (this.configuration.MotionBlur == 0 ? "Off" : "On");  
 		messagesText.text += "\nRedColor Distortion: " + (this.configuration.RedColor == 0 ? "Off" : "On");
-		messagesText.text += "\nRandom Effects: " + (this.configuration.Randomness == 0 ? "Off" : "On");
+		messagesText.text += "\nRandom Effects: " + (this.configuration.Randomization == 0 ? "Off" : "On");
 	}
 
 	private void LoadDefaultConfig (string value)
@@ -144,7 +144,7 @@ public class DeleteConfigViewModel : MonoBehaviour
 		this.configuration.Delay = 0;
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0;    
-		this.configuration.Randomness = 0;
+		this.configuration.Randomization = 0;
 	}
 
 
@@ -156,7 +156,7 @@ public class DeleteConfigViewModel : MonoBehaviour
 		this.configuration.Delay = 0;
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0;    
-		this.configuration.Randomness = 0;
+		this.configuration.Randomization = 0;
 	}
 
 	private void LoadDrunkConfig ()
@@ -167,7 +167,7 @@ public class DeleteConfigViewModel : MonoBehaviour
 		this.configuration.Delay = 0;
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0;    
-		this.configuration.Randomness = 0;
+		this.configuration.Randomization = 0;
 	}
 
 	private void LoadVeryDrunkConfig ()
@@ -178,6 +178,6 @@ public class DeleteConfigViewModel : MonoBehaviour
 		this.configuration.Delay = 0;
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0;    
-		this.configuration.Randomness = 0;
+		this.configuration.Randomization = 0;
 	}
 }

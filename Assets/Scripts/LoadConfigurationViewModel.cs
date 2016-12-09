@@ -14,7 +14,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 
 	private string ApplicationPath { get { return applicationPath; } set { applicationPath = value; } }
 
-	private ConfigurationDTO configuration;
+	private Configuration configuration;
 
 	private ConfigFilesScrollList configFilesList;
 
@@ -41,7 +41,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		ApplicationPath = Application.persistentDataPath;
 		ConfigFilesList = GameObject.Find ("GameController").GetComponent<ConfigFilesScrollList> ();
 		errormessagesText = GameObject.Find ("ErrorMessagesText").GetComponent<Text> ();
-		configuration = new ConfigurationDTO ();
+		configuration = new Configuration ();
 		ConfigFilesList.OnSelectionChanged = ShowSelectedConfigIndex;
 	}
 
@@ -83,7 +83,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		PlayerPrefs.SetInt ("DelayLevel", this.configuration.Delay);
 		PlayerPrefs.SetInt ("MotionBlur", this.configuration.MotionBlur);
 		PlayerPrefs.SetInt ("RedColorDistortion", this.configuration.RedColor);    
-		PlayerPrefs.SetInt ("RandomEffects", this.configuration.Randomness);
+		PlayerPrefs.SetInt ("RandomEffects", this.configuration.Randomization);
 	}
 
 	private void LoadDefaultConfig (string value)
@@ -118,7 +118,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		this.configuration.Delay = 0;
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0;    
-		this.configuration.Randomness = 0;
+		this.configuration.Randomization = 0;
 	}
 
 
@@ -130,7 +130,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		this.configuration.Delay = 0;
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0;    
-		this.configuration.Randomness = 0;
+		this.configuration.Randomization = 0;
 	}
 
 	private void LoadDrunkConfig ()
@@ -141,7 +141,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		this.configuration.Delay = 0;
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0;    
-		this.configuration.Randomness = 0;
+		this.configuration.Randomization = 0;
 	}
 
 	private void LoadVeryDrunkConfig ()
@@ -152,7 +152,7 @@ public class LoadConfigurationViewModel : MonoBehaviour
 		this.configuration.Delay = 0;
 		this.configuration.MotionBlur = 0;
 		this.configuration.RedColor = 0;    
-		this.configuration.Randomness = 0;
+		this.configuration.Randomization = 0;
 	}
 
 	private void LoadScene (int sceneIndex)
