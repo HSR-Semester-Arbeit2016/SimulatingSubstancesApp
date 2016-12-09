@@ -1,49 +1,43 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Delay : MonoBehaviour
 {
-	private Queue<RenderTexture> renderTextureQueue;
-	private bool isEnabled = false;
+    private const int delayQueueCount = 15;
+    private readonly Queue<RenderTexture> renderTextureQueue;
 
-	public bool IsEnabled {
-		get { return isEnabled; }
-		set { isEnabled = value; }
-	}
+    public Delay()
+    {
+        renderTextureQueue = new Queue<RenderTexture>();
+    }
 
-	private int delayQueueCount = 15;
+    private void OnRenderImage(RenderTexture src, RenderTexture dest)
+    {
+        if (enabled)
+        {
+            SetDelay(src, dest);
+        }
+        else
+        {
+            Graphics.Blit(src, dest);
+        }
+    }
 
-	private int DelayQueueCount {
-		get { return delayQueueCount; }
-	}
-
-	public Delay ()
-	{
-		this.renderTextureQueue = new Queue<RenderTexture> ();
-	}
-
-	void OnRenderImage (RenderTexture src, RenderTexture dest)
-	{
-		if (isEnabled) {
-			this.setDelay (src, dest);
-		} else {
-			Graphics.Blit (src, dest);
-		}
-	}
-
-	private void setDelay (RenderTexture src, RenderTexture dest)
-	{
-		RenderTexture temporary = RenderTexture.GetTemporary (src.width, src.height);
-		if (temporary.IsCreated ()) {
-			renderTextureQueue.Enqueue (temporary);
-		} else {			
-			renderTextureQueue.Enqueue (src);
-		}
-		if (renderTextureQueue.Count == DelayQueueCount) {
-			src = (RenderTexture)renderTextureQueue.Dequeue ();
-			Graphics.Blit (src, dest);
-		} 
-	}
+    private void SetDelay(RenderTexture src, RenderTexture dest)
+    {
+        var temporary = RenderTexture.GetTemporary(src.width, src.height);
+        if (temporary.IsCreated())
+        {
+            renderTextureQueue.Enqueue(temporary);
+        }
+        else
+        {
+            renderTextureQueue.Enqueue(src);
+        }
+        if (renderTextureQueue.Count == delayQueueCount)
+        {
+            src = renderTextureQueue.Dequeue();
+            Graphics.Blit(src, dest);
+        }
+    }
 }
