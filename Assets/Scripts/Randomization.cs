@@ -10,9 +10,10 @@ namespace Assets.Scripts
 {
     public class Randomization : MonoBehaviour
     {
-        private static readonly int predefinedInterval = 10;
-        private static readonly float blurValueMax = 10;
-        private static readonly float tunnelValueMax = 15;
+        private const int predefinedInterval = 10;
+        private const float blurValueMax = 10;
+        private const float tunnelValueMax = 15;
+        private const float valueMin = 0;
         private float blurLevelCurrent;
         private Randomizer blurRandomizer;
         private long internalTime;
@@ -28,8 +29,8 @@ namespace Assets.Scripts
         private void Start()
         {
             internalTime = DateTime.Now.Ticks;
-            blurRandomizer = new Randomizer(PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel), 0, blurValueMax, 1, 3000, 8);
-            tunnelRandomizer = new Randomizer(PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel), 0, tunnelValueMax, 1.5f);
+            blurRandomizer = new Randomizer(PlayerPrefs.GetFloat(PlayerPreferences.BlurLevel), valueMin, blurValueMax, 1, 3000, 8);
+            tunnelRandomizer = new Randomizer(PlayerPrefs.GetFloat(PlayerPreferences.TunnelLevel), valueMin, tunnelValueMax, 1.5f);
 
             blurComponents = new BlurOptimized[2];
             FillComponents(blurComponents);
