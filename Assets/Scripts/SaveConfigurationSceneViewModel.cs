@@ -14,9 +14,6 @@ namespace Assets.Scripts
         public void SaveConfiguration()
         {
             var fileNameInputField = GameObject.Find(ConfigurationControls.FileNameInput).GetComponent<InputField>();
-#if DEBUG
-            Debug.Log("Input field text: " + fileNameInputField.text);
-#endif
             SaveToFile(ConfigurationHelper.GenerateConfigurationByPlayerPrefs(fileNameInputField.text));
         }
 
