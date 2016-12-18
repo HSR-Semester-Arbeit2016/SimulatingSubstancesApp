@@ -14,6 +14,10 @@ namespace Assets.Scripts
 
 		public Action<int> OnSelectionChanged;
 
+		/// <summary>
+		/// Gets or sets the application path, which contains the path to a persistent data directory 
+		/// </summary>
+		/// <value>The application path.</value>
 		public string ApplicationPath { get; set; }
 
 		public ConfigFilesScrollList ConfigFilesScrollList { get; set; }
@@ -31,30 +35,12 @@ namespace Assets.Scripts
 
 		private void ShowSelectedConfig (int index)
 		{
-#if DEBUG
-            Debug.Log ("ShowSelectedConfig called with index: " + index);
-#endif
-            try {
+			try {
 				ConfigurationHelper.ResetConfigEffectValues (configuration);
 				var selectedConfig = ConfigFilesScrollList [index];
-				if (DefaultConfigurations.List.Contains (selectedConfig.FileName)) {
-					switch (selectedConfig.FileName) {
-					case ConfigurationNames.CreateNew:
-					case ConfigurationNames.DeleteExisting:
-						ConfigurationHelper.ResetConfigEffectValues (configuration);
-						break;
-					default:
-						configuration = ConfigurationHelper.GetDefaultConfig (selectedConfig.FileName);
-						break;
-					}
-#if DEBUG
-                    Debug.Log ("ShowSelectedConfig called with file name: " + selectedConfig.FileName);
-#endif
-                    messageText.text = configuration.ToString ();
-				} else {
-					configuration = FileManager.Load (selectedConfig.FileName);
-					messageText.text = configuration.ToString ();
-				}
+				configuration = FileManager.Load (selectedConfig.FileName);
+				messageText.text = configuration.ToString ();
+
 			} catch (Exception ex) {
 				ShowErrorMessage (ex);
 			}
