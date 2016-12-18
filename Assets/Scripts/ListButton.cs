@@ -3,9 +3,13 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
-    public class ListButton : MonoBehaviour
-    {
-        public Button button;
-        public Text nameLabel;
-    }
+	/// <summary>
+	/// Class needed by the ListItemButton Prefab in order to keep the references to itself in the Unity Editor. 
+	/// This script allows too the creation of the ListItemButton prefab on the runtime
+	/// </summary>
+	public class ListButton : MonoBehaviour
+	{
+		public Button button;
+		public Text nameLabel;
+	}
 }

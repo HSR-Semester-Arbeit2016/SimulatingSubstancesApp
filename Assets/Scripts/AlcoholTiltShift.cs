@@ -3,12 +3,10 @@ using UnityStandardAssets.ImageEffects;
 
 namespace Assets.Scripts
 {
-    /*
-	 * This class is identical to the TiltShift class from UnityStandardAssets.ImageEffects.
-	 * It's necessary because it is not possible to acces the 
-	 * TiltShift class from the TiltViewModel class
-	 */
-
+	/// <summary>
+	/// This class is a copy of the TiltShift class from UnityStandardAssets.ImageEffects. 
+	/// It's necessary because the original TiltShift class is not accessible
+	/// </summary>
     [RequireComponent(typeof (Camera))]
     [AddComponentMenu("Image Effects/Camera/Tilt Shift (Lens Blur)")]
     internal class AlcoholTiltShift : PostEffectsBase

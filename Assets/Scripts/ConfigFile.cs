@@ -2,16 +2,17 @@
 
 namespace Assets.Scripts
 {
-    [Serializable]
-    public class ConfigFile
-    {
-        public ConfigFile(string fileName, string filePath)
-        {
-            FileName = fileName;
-            FilePath = filePath;
-        }
+	/// <summary>
+	/// Simple abstraction of the configuration's file where the user stores its customs configurations 
+	/// </summary>
+	[Serializable]
+	public class ConfigFile
+	{
+		public ConfigFile (string fileName)
+		{
+			FileName = fileName;
+		}
 
-        public string FilePath { get; set; }
-        public string FileName { get; set; }
-    }
+		public string FileName { get; set; }
+	}
 }

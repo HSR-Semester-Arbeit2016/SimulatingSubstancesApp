@@ -13,7 +13,15 @@ namespace Assets.Scripts
 	public class ConfigFilesScrollList : MonoBehaviour
 	{
 		private List<ConfigFile> configFilesList;
+		/// <summary>
+		/// As its name indicates, this panel contains all the listButtons or list elements. 
+		/// This reference must be set by dragging & dropping of the ContentPanel in the Unity Editor
+		/// </summary>
 		public Transform contentPanel;
+		/// <summary>
+		/// This is a reference to the ListItemButton prefab. 
+		/// The reference must be set in the Unity editor by dragging & dropping the ListItemButton prefab.
+		/// </summary>
 		public GameObject listButton;
 		public Action<int> OnSelectionChanged;
 
@@ -42,11 +50,15 @@ namespace Assets.Scripts
 		{
 			var fileEntries = Directory.GetFiles (Application.persistentDataPath);
 			foreach (var fileName in fileEntries) {
-				var newConfigFile = new ConfigFile (Path.GetFileName (fileName), fileName);
+				var newConfigFile = new ConfigFile (Path.GetFileName (fileName));
 				configFilesList.Add (newConfigFile);
 			}
 		}
 
+		/// <summary>
+		/// For each element in the configFilesList this method instantiates a listButton prefab, assigns it the file's name, 
+		/// registers a listener with the element's index and finally adds the new prefab to the ContentPanel in order to show it in the GUI 
+		/// </summary>
 		private void FillListInGui ()
 		{
 			foreach (var file in configFilesList) {

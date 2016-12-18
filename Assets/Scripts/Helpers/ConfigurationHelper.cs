@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace Assets.Scripts.Helpers
-{
+{   
     public static class ConfigurationHelper
     {
         public static void ResetConfigEffectValues(Configuration configuration)
@@ -14,7 +14,12 @@ namespace Assets.Scripts.Helpers
             configuration.RedColor = 0;
             configuration.Randomization = 0;
         }
-
+		/// <summary>
+		/// Returns the default configuration corresponding to a Sober, 
+		/// Slightly Drunk, Drunk or Very Drunk alcohol level (key)
+		/// </summary>
+		/// <returns>The default config.</returns>
+		/// <param name="key">Key.</param>
         public static Configuration GetDefaultConfig(string key)
         {
             switch (key)
@@ -29,7 +34,12 @@ namespace Assets.Scripts.Helpers
                     return DefaultConfigurations.Sober;
             }
         }
-
+		/// <summary>
+		/// Returns a Configuration Object filled with the data obtained from the current values
+		/// saved at the PlayerPrefs (see Unity Doc for PlayerPrefs).
+		/// </summary>
+		/// <returns>The configuration by player prefs.</returns>
+		/// <param name="configName">Config name.</param>
         public static Configuration GenerateConfigurationByPlayerPrefs(string configName)
         {
             return new Configuration
