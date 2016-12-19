@@ -105,10 +105,11 @@ namespace Assets.Scripts
 				#endif
 			}
 		}
-	    /// <summary>
-	    /// Saves the data to player prefs for data sharing between scenes
-	    /// </summary>
-	    /// <param name="selectedConfig">Selected config.</param>
+
+		/// <summary>
+		/// Saves the data to player prefs for data sharing between scenes
+		/// </summary>
+		/// <param name="selectedConfig">Selected config.</param>
 		private void SaveDataToPlayerPrefs (Configuration selectedConfig)
 		{  
 			PlayerPrefs.SetString (PlayerPreferences.ConfigurationName, configuration.Name);
@@ -136,6 +137,12 @@ namespace Assets.Scripts
 			}
 		}
 
+		/// <summary>
+		/// If a default configuration is selected, the Simulating Substances scene is loaded directly. 
+		/// If the user wants to create a configuration or delete an old one the corresponding 
+		/// scenes Configuration or DeleteConfig scenes are loaded
+		/// </summary>
+		/// <param name="selectedConfig">Selected config.</param>
 		private void LoadCorrespondingScene (string selectedConfig)
 		{
 			switch (selectedConfig) {

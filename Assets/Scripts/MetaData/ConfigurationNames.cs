@@ -1,7 +1,8 @@
 ﻿namespace Assets.Scripts.MetaData
 {
 	/// <summary>
-	/// Definitions of the default configuration names as alcohol levels
+	/// Definitions of the default configuration names as alcohol levels and the possibility 
+	/// of "Create" new configurations or "Delete" old configurations
 	/// </summary>
 	public static class ConfigurationNames
 	{

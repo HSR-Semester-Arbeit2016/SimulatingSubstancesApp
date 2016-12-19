@@ -4,12 +4,13 @@ using UnityEngine;
 namespace Assets.Scripts
 {
 	/// <summary>
-	///  A very simple object pooling class which creates prefag objects.
+	///  A very simple object pooling class which creates prefab buttons objects.
 	/// </summary>
 	public class SimpleObjectPool : MonoBehaviour
 	{
 		/// <summary>
-		/// The prefab that this object pool returns instances of. The reference must be set by dragging and dropping it in Unity editor
+		/// The prefab that this object pool returns instances of, in this case a ListItemButton. 
+		/// The reference must be set by dragging and dropping the ListItemButton prefab to this field in the Unity editor.
 		/// </summary>
 		public GameObject prefab;
 		/// <summary>
@@ -47,7 +48,7 @@ namespace Assets.Scripts
 		}
 
 		/// <summary>
-		/// Returns an instance of the prefab to the pool
+		/// Returns an instance of the prefab ListItemButton to the pool
 		/// </summary>
 		/// <param name="toReturn">To return.</param>
 		public void ReturnObject (GameObject toReturn)

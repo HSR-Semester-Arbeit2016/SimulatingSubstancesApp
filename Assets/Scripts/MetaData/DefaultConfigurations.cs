@@ -3,7 +3,8 @@
 namespace Assets.Scripts.MetaData
 {
 	/// <summary>
-	/// These are the configurations values proposed by ASN for the corresponding alcohol levels
+	/// These are the configurations values proposed by ASN for the corresponding alcohol levels.
+	/// The Sober configuration acts as default configuration when none is chosen.
 	/// </summary>
 	public static class DefaultConfigurations
 	{
