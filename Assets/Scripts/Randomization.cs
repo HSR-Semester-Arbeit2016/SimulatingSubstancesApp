@@ -5,6 +5,7 @@ using Assets.Scripts.MetaData.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
+using System.Globalization;
 
 namespace Assets.Scripts
 {
@@ -63,14 +64,14 @@ namespace Assets.Scripts
 		{
 			blurComponents [0].blurSize = newValue;
 			blurComponents [1].blurSize = newValue;
-			blurValueText.text = newValue.ToString ();
+			blurValueText.text = newValue.ToString ("F", CultureInfo.InvariantCulture);
 		}
 
 		private void UpdateTunnelValue (float newValue)
 		{
 			tunnelVisionComponents [0].blurArea = newValue;
 			tunnelVisionComponents [1].blurArea = newValue;
-			tunnelValueText.text = newValue.ToString ();
+			tunnelValueText.text = newValue.ToString ("F", CultureInfo.InvariantCulture);
 		}
 
 		private void FillComponents<T> (T[] componentArray)

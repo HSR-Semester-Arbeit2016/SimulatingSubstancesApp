@@ -4,6 +4,7 @@ using Assets.Scripts.MetaData.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Globalization;
 
 namespace Assets.Scripts
 {
@@ -47,14 +48,14 @@ namespace Assets.Scripts
 		public void SetTunnelValue (float newTunnelValue)
 		{
 			PlayerPrefs.SetFloat (PlayerPreferences.TunnelLevel, newTunnelValue);
-			tunnelLevelText.text = newTunnelValue.ToString ();
+			tunnelLevelText.text = newTunnelValue.ToString ("F", CultureInfo.InvariantCulture);
 		}
 
 
 		public void SetBlurSize (float newBlurValue)
 		{
 			PlayerPrefs.SetFloat (PlayerPreferences.BlurLevel, newBlurValue);
-			blurLevelText.text = newBlurValue.ToString ();
+			blurLevelText.text = newBlurValue.ToString ("F", CultureInfo.InvariantCulture);
 		}
 
 		public void SetDelay (int value)
