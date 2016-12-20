@@ -128,6 +128,9 @@ namespace Assets.Scripts
 			if (value > 0) {
 				randomizationComponent.enabled = true;
 				randomizationToggle.isOn = true;
+			} else {
+				randomizationComponent.enabled = false;
+				randomizationToggle.isOn = false;
 			}
 		}
 

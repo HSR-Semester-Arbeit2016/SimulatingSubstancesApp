@@ -43,12 +43,17 @@ namespace Assets.Scripts
 
 			SetBlurSize (PlayerPrefs.GetFloat (PlayerPreferences.BlurLevel));
 			SetTunnelValue (PlayerPrefs.GetFloat (PlayerPreferences.TunnelLevel));
+			SetDelay (PlayerPrefs.GetInt (PlayerPreferences.DelayLevel));
+			SetMotionBlur (PlayerPrefs.GetInt (PlayerPreferences.MotionBlur));
+			SetRedColorDistortion (PlayerPrefs.GetInt (PlayerPreferences.RedColorDistortion));
+			SetRandomEffects (PlayerPrefs.GetInt (PlayerPreferences.Randomization));
 		}
 
 		public void SetTunnelValue (float newTunnelValue)
 		{
 			PlayerPrefs.SetFloat (PlayerPreferences.TunnelLevel, newTunnelValue);
 			tunnelLevelText.text = newTunnelValue.ToString ("F", CultureInfo.InvariantCulture);
+			tunnelSlider.value = newTunnelValue;
 		}
 
 
@@ -56,6 +61,7 @@ namespace Assets.Scripts
 		{
 			PlayerPrefs.SetFloat (PlayerPreferences.BlurLevel, newBlurValue);
 			blurLevelText.text = newBlurValue.ToString ("F", CultureInfo.InvariantCulture);
+			blurSlider.value = newBlurValue;
 		}
 
 		public void SetDelay (int value)

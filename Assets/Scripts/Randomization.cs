@@ -27,6 +27,8 @@ namespace Assets.Scripts
 
 		private Text tunnelValueText;
 		private Text blurValueText;
+		private Toggle blurToggle;
+		private Toggle tunnelToggle;
 
 		private void Start ()
 		{
@@ -43,6 +45,8 @@ namespace Assets.Scripts
 
 			tunnelValueText = GameObject.Find (SimulatingSubstancesControls.TunnelLevelText).GetComponent<Text> ();
 			blurValueText = GameObject.Find (SimulatingSubstancesControls.BlurLevelText).GetComponent<Text> ();
+			blurToggle = GameObject.Find (SimulatingSubstancesControls.BlurToggle).GetComponent<Toggle> ();
+			tunnelToggle = GameObject.Find (SimulatingSubstancesControls.TunnelToggle).GetComponent<Toggle> ();
 		}
 
 		private void Update ()
@@ -55,7 +59,8 @@ namespace Assets.Scripts
 				UpdateBlurValue (blurLevelCurrent);
 				tunnelLevelCurrent = tunnelRandomizer.DoRandomWalk (tunnelLevelCurrent);
 				UpdateTunnelValue (tunnelLevelCurrent);
-
+				blurToggle.isOn = true;
+				tunnelToggle.isOn = true;
 				internalTime = DateTime.Now.Ticks;
 			}
 		}
