@@ -9,12 +9,27 @@ using System.Globalization;
 
 namespace Assets.Scripts
 {
-	// TODO comments Koni
 	public class Randomization : MonoBehaviour
 	{
-		private const int predefinedInterval = 10;
-		private const float blurValueMax = 10;
-		private const float tunnelValueMax = 15;
+        /// <summary>
+        /// The interval (seconds) in which the RandomWalk is actually called and the values potentially get altered.
+        /// </summary>
+        [SerializeField]        
+		private const int predefinedInterval = 5;
+        /// <summary>
+        /// The maximum value that is allowed to be reached on the Blur component.
+        /// </summary>
+        [SerializeField]
+        private const float blurValueMax = 10;
+        /// <summary>
+        /// The maximum value that is allowed to be reached on the TiltShift component.
+        /// </summary>
+        [SerializeField]
+        private const float tunnelValueMax = 15;
+        /// <summary>
+        /// The minimum value that is allowed to be reached on the Blur and TiltShift component.
+        /// </summary>
+        [SerializeField]
 		private const float valueMin = 0;
 		private float blurLevelCurrent;
 		private Randomizer blurRandomizer;
@@ -30,13 +45,16 @@ namespace Assets.Scripts
 		private Toggle blurToggle;
 		private Toggle tunnelToggle;
 
+        /// <summary>
+        /// This method initializes the Randomizer components for the Blur and TiltShift effects and saves the all repeatedly accessed components in global variables.
+        /// </summary>
 		private void Start ()
 		{
 			internalTime = DateTime.Now.Ticks;
 			blurLevelCurrent = PlayerPrefs.GetFloat (PlayerPreferences.BlurLevel);
-			blurRandomizer = new Randomizer (blurLevelCurrent, valueMin, blurValueMax, 1, 3000, 8);
+			blurRandomizer = new Randomizer (blurLevelCurrent, valueMin, blurValueMax);
 			tunnelLevelCurrent = PlayerPrefs.GetFloat (PlayerPreferences.TunnelLevel);
-			tunnelRandomizer = new Randomizer (tunnelLevelCurrent, valueMin, tunnelValueMax, 1.5f);
+			tunnelRandomizer = new Randomizer (tunnelLevelCurrent, valueMin, tunnelValueMax);
 
 			blurComponents = new BlurOptimized[2];
 			FillComponents (blurComponents);
@@ -49,6 +67,10 @@ namespace Assets.Scripts
 			tunnelToggle = GameObject.Find (SimulatingSubstancesControls.TunnelToggle).GetComponent<Toggle> ();
 		}
 
+        /// <summary>
+        /// This method is called on each frame that passes through the ARcamera-component and simply checks whether the Randomization component is active and the defined interval has been reached.
+        /// If both of those are true, the RandomWalk is processed for both the Blur and TiltShift component.
+        /// </summary>
 		private void Update ()
 		{
 			var timeSpanElapsed = new TimeSpan (DateTime.Now.Ticks - internalTime);
