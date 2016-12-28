@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.DTO
 {
 	/// <summary>
 	/// DataTransfer Object (DTO) carrying configuration data.

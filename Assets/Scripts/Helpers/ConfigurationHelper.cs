@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.MetaData;
+﻿using Assets.Scripts.DTO;
+using Assets.Scripts.MetaData;
 using UnityEngine;
 
 namespace Assets.Scripts.Helpers

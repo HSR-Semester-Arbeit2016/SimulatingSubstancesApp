@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Assets.Scripts.DTO;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.MetaData;
 using UnityEngine;

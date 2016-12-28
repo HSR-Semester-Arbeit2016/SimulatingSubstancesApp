@@ -19,7 +19,7 @@ namespace Assets.Scripts
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is enabled. 
-		/// Do not confuse with the <code>enabled</code> variable of the <code>Behaviour</code> class. If this last is used, application can crash.
+		/// Do not confuse with the <code>enabled</code> variable of the <code>Behaviour</code> class. If the latter is used, application can crash.
 		/// </summary>
 		/// <value><c>true</c> if this instance is enabled; otherwise, <c>false</c>.</value>
 		public bool IsEnabled { get; set; }

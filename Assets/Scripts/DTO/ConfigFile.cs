@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.DTO
 {
 	/// <summary>
 	/// Simple abstraction of the configuration's file where the user stores its customs configurations 

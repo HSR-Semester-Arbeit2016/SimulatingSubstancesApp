@@ -14,23 +14,20 @@ namespace Assets.Scripts
         /// <summary>
         /// The interval (seconds) in which the RandomWalk is actually called and the values potentially get altered.
         /// </summary>
-        [SerializeField]        
-		private const int predefinedInterval = 5;
+        private const int predefinedInterval = 5;
         /// <summary>
         /// The maximum value that is allowed to be reached on the Blur component.
         /// </summary>
-        [SerializeField]
         private const float blurValueMax = 10;
         /// <summary>
         /// The maximum value that is allowed to be reached on the TiltShift component.
         /// </summary>
-        [SerializeField]
         private const float tunnelValueMax = 15;
         /// <summary>
         /// The minimum value that is allowed to be reached on the Blur and TiltShift component.
-        /// </summary>
-        [SerializeField]
+        /// </summary>        
 		private const float valueMin = 0;
+
 		private float blurLevelCurrent;
 		private Randomizer blurRandomizer;
 		private long internalTime;

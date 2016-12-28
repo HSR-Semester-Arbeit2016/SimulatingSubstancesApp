@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.Scripts.DTO;
 using UnityEngine;
 using UnityEngine.UI;
 
